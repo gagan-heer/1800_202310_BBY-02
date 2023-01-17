@@ -10,7 +10,6 @@ List team members and/or short bio's here...
 * Wooyong Kim.
 * Arcie L.
 * Gaganjit Heer
-* ...
 	
 ## 3. Technologies and Resources Used
 List technologies (with version numbers), API's, icons, fonts, images, media or data sources, and other resources that were used.
@@ -34,7 +33,7 @@ Here are some known bugs:
 
 ## 6. Features for Future
 What we'd like to build in the future:
-* ...
+* A feature that notifies users if sidewalk temperatures are harmful for pets.
 * ...
 * ...
 	
