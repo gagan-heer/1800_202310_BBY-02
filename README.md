@@ -35,7 +35,7 @@ Here are some known bugs:
 What we'd like to build in the future:
 * Alert to remind users to change their tires to snow tires in advance based on weather predictions
 * A feature that notifies users if sidewalk temperatures are harmful for pets.
-* This is a test.
+* A feature that people can see through the  live camere. 
 * ...
 	
 ## 7. Contents of Folder
