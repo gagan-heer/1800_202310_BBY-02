@@ -2,6 +2,7 @@
 
 ## 1. Project Description
 This app will be tracking traffic and warn drivers about the road conditions.
+traffic tracking app that uses BC highway cameras and datas.
 
 ## 2. Names of Contributors
 List team members and/or short bio's here... 
