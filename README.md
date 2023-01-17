@@ -9,7 +9,7 @@ List team members and/or short bio's here...
 
 * Gaganjit Heer
 * Arcie L.
-* Akoaskdoas
+* Wooyong Kim.
 * ...
 	
 ## 3. Technologies and Resources Used
