@@ -1,8 +1,7 @@
 # Project Title
 
 ## 1. Project Description
-State your app in a nutshell, or one-sentence pitch. Give some elaboration on what the core features are.  
-This browser based web application to ... 
+traffic tracking app that uses BC highway cameras and datas.
 
 ## 2. Names of Contributors
 List team members and/or short bio's here... 
