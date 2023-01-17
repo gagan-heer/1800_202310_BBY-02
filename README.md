@@ -7,8 +7,8 @@ traffic tracking app that uses BC highway cameras and datas.
 ## 2. Names of Contributors
 List team members and/or short bio's here... 
 
-* Gaganjit Heer
 * Arcie L.
+* Gaganjit Heer
 * Wooyong Kim.
 * ...
 	
