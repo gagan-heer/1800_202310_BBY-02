@@ -19,7 +19,13 @@
 </head>
 
 <body>
-
+<!-- Bootstrap Library CSS JS CDN go here -->
+    <!------------------------------------------>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-primary">
         <div class="container-fluid">
@@ -59,16 +65,13 @@
       </nav>
 
       <!------------Hero------------->
-      <div class="px-4 pt-5 my-5 text-center border-bottom">
-        <h1 class="display-4 fw-bold">WeatherJam</h1>
-        <div class="col-lg-6 mx-auto">
-          <p class="lead mb-4">Don't get stuck in a weather jam!</p>
-          <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
-            <a href="login.html" class="btn btn-info" role="button">Log in</a>
-            <a href="login.html" class="btn btn-info" role="button">Sign up</a>
-          </div>
+      <div class="container-fluid bg-light text-dark p-5">
+        <div class="container bg-light p-5">
+            <h1 class="display-4">Good morning, <span id="name-goes-here"></span>  It's good to see you.</h1>
+            <hr>
+            <p>Quote of the day: The best view comes after the hardest climb.</p>
         </div>
-       </div>
+</div>
           
           <!-- Add an onclick attribute to define click event handler -->
           <!-- <button onclick="window.location.href='login.html'" class="btn btn-primary btn-lg" type="button">Login/Signup</button> -->
@@ -170,6 +173,12 @@
   <!-- Copyright -->
 </footer>
 <!-- Footer -->
+ <!-- Your own JavaScript functions go here    -->
+    <!---------------------------------------------->
+    <script src="./scripts/firebaseAPI_BBY02.js"></script>
+    <script src="./scripts/skeleton.js"></script>
+    <script src="./scripts/main.js"></script>
+    <!-- <script src="./scripts/script.js"></script> -->
 </body>
 
 </html>
