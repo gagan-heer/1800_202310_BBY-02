@@ -1,4 +1,4 @@
-.animate-charcter
+/* .animate-charcter
 {
    text-transform: uppercase;
   background-image: linear-gradient(
@@ -19,6 +19,16 @@
   animation: textclip 2s linear infinite;
   display: inline-block;
       font-size: 30px;
+} */
+
+.bottom-links {
+  color: white;
+  padding-left: 5px;
+  text-decoration: none;
+}
+
+.bottom-links:hover {
+  color: #e7e7e7;
 }
 
 @keyframes textclip {
