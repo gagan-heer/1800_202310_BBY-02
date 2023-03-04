@@ -20,3 +20,157 @@ function insertName() {
 }
 insertName(); //run the function
 
+//*******************************************************************************************/
+//***************************** Route data **************************************************/
+function writeRoutes() {
+    //define a variable for the collection you want to create in Firestore to populate data
+    var routesRef = db.collection("routes");
+
+    routesRef.add({
+        code: "KnightNorthendN",
+        name: "Knight Street Bridge Northend - N", 
+        city: "Vancouver",
+        province: "BC",
+		details: "North end of Knight Street Bridge, looking north",
+        last_updated: firebase.firestore.FieldValue.serverTimestamp()  //current system time
+    });
+    routesRef.add({
+        code: "KnightNorthendS",
+        name: "Knight Street Bridge Northend - S", 
+        city: "Vancouver",
+        province: "BC",
+        details: "North end of Knight STreet Bridge, looking south",
+        last_updated: firebase.firestore.Timestamp.fromDate(new Date("March 10, 2022"))
+    });
+    routesRef.add({
+        code: "AlexFraserS",
+        name: "Alex Fraser Bridge - Southbound", //replace with your own city?
+        city: "Annacis Island",
+        province: "BC",
+        details:  "Alex Fraser Bridge, mid-span, looking south",
+        last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
+    });
+    routesRef.add({
+        code: "AlexFraserN",
+        name: "Alex Fraser Bridge - Northbound", //replace with your own city?
+        city: "Annacis Island",
+        province: "BC",
+        details:  "Alex Fraser Bridge, mid-span, looking north",
+        last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
+    });
+    routesRef.add({
+        code: "HW91ABoundaryW",
+        name: "Highway 91A at Boundary Rd - W", //replace with your own city?
+        city: "New Westminster/Queensborough",
+        province: "BC",
+        details:  "Highway 91A at Boundary Road, looking west",
+        last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
+    });
+    routesRef.add({
+        code: "HW91ABoundaryE",
+        name: "Highway 91A at Boundary Rd - E", //replace with your own city?
+        city: "New Westminster/Queensborough",
+        province: "BC",
+        details:  "Highway 91A at Boundary Road, looking east",
+        last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
+    });
+    routesRef.add({
+        code: "HW99CambieN",
+        name: "Highway 99 at Cambie Rd - N", //replace with your own city?
+        city: "Richmond",
+        province: "BC",
+        details:  "Highway 99 at Cambie Rd in Richmond, looking north",
+        last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
+    });
+    routesRef.add({
+        code: "HW99CambieS",
+        name: "Highway 99 at Cambie Rd - S", //replace with your own city?
+        city: "Richmond",
+        province: "BC",
+        details:  "Highway 99 at Cambie Rd in Richmond, looking south",
+        last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
+    });
+    routesRef.add({
+        code: "Oak70N",
+        name: "Oak St at 70th - N", //replace with your own city?
+        city: "Vancouver",
+        province: "BC",
+        details:  "Oak Street at 70th Avenue, north approach to Oak Street Bridge, looking north on Oak Street",
+        last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
+    });
+    routesRef.add({
+        code: "Oak70S",
+        name: "Oak St at 70th - S", //replace with your own city?
+        city: "Vancouver",
+        province: "BC",
+        details:  "Oak Street at 70th Avenue, north approach to Oak Street Bridge, looking south to the bridge",
+        last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
+    });
+    routesRef.add({
+        code: "PattulloNorthendN",
+        name: "Pattullo Bridge Northend - North", //replace with your own city?
+        city: "New Westminster",
+        province: "BC",
+        details:  "Pattullo Bridge at north end, in New Westminster, looking north",
+        last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
+    });
+    routesRef.add({
+        code: "PattulloNorthendS",
+        name: "Pattullo Bridge Northend - South", //replace with your own city?
+        city: "New Westminster",
+        province: "BC",
+        details:  "Pattullo Bridge at north end, in New Westminster, looking south",
+        last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
+    });
+    routesRef.add({
+        code: "KensingtonE",
+        name: "Kensington - E", //replace with your own city?
+        city: "Burnaby",
+        province: "BC",
+        details:  "Highway 1 at Kensington Avenue, looking east",
+        last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
+    });
+    routesRef.add({
+        code: "KensingtonW",
+        name: "Kensington - W", //replace with your own city?
+        city: "Burnaby",
+        province: "BC",
+        details:  "Highway 1 at Kensington Avenue, looking west",
+        last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
+    });
+}
+
+//------------------------------------------------------------------------------
+// Input parameter is a string representing the collection we are reading from
+//------------------------------------------------------------------------------
+function displayCardsDynamically(collection) {
+    let cardTemplate = document.getElementById("routeCardTemplate");
+
+    db.collection(collection).get()   //the collection called "hikes"
+        .then(allRoutes=> {
+            //var i = 1;  //Optional: if you want to have a unique ID for each hike
+            allRoutes.forEach(doc => { //iterate thru each doc
+                var title = doc.data().name;       // get value of the "name" key
+                var details = doc.data().details;  // get value of the "details" key
+				var routeCode = doc.data().code;    //get unique ID to each hike to be used for fetching right image
+                let newcard = cardTemplate.content.cloneNode(true);
+
+                //update title and text and image
+                newcard.querySelector('.card-title').innerHTML = title;
+                newcard.querySelector('.card-text').innerHTML = details;
+                newcard.querySelector('.card-image').src = `https://dummyimage.com/400x315/a6a6a6/fff`; //Example: NV01.jpg
+
+                //Optional: give unique ids to all elements for future use
+                // newcard.querySelector('.card-title').setAttribute("id", "ctitle" + i);
+                // newcard.querySelector('.card-text').setAttribute("id", "ctext" + i);
+                // newcard.querySelector('.card-image').setAttribute("id", "cimage" + i);
+
+                //attach to gallery, Example: "hikes-go-here"
+                document.getElementById(collection + "-go-here").appendChild(newcard);
+
+                //i++;   //Optional: iterate variable to serve as unique ID
+            })
+        })
+}
+
+displayCardsDynamically("routes");  //input param is the name of the collection
