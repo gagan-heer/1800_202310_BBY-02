@@ -37,3 +37,18 @@
   }
 
 }
+
+.like {
+  display: inline-block;
+}
+
+.counter {
+  border: none;
+  pointer-events: none;
+}
+
+.like-button {
+  border: none;
+  background: none;
+}
+
