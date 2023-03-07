@@ -10,16 +10,6 @@
   display: none;
 }
 
-.bottom-links {
-  color: white;
-  padding-left: 5px;
-  text-decoration: none;
-}
-
-.bottom-links:hover {
-  color: #e7e7e7;
-}
-
 .card {
   margin: 5px;
 }
