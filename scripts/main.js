@@ -7,7 +7,6 @@ function insertName() {
             console.log(user.uid); //print the uid in the browser console
             console.log(user.displayName);  //print the user name in the browser console
             user_Name = user.displayName;
-
             //method #1:  insert with html only
             //document.getElementById("name-goes-here").innerText = user_Name;    //using javascript
             //method #2:  insert using jquery
@@ -32,7 +31,6 @@ function writeRoutes() {
         city: "Vancouver",
         province: "BC",
 		details: "North end of Knight Street Bridge, looking north",
-        likes: 0,
         last_updated: firebase.firestore.FieldValue.serverTimestamp()  //current system time
     });
     routesRef.add({
@@ -41,7 +39,6 @@ function writeRoutes() {
         city: "Vancouver",
         province: "BC",
         details: "North end of Knight STreet Bridge, looking south",
-        likes: 0,
         last_updated: firebase.firestore.Timestamp.fromDate(new Date("March 10, 2022"))
     });
     routesRef.add({
@@ -50,7 +47,6 @@ function writeRoutes() {
         city: "Annacis Island",
         province: "BC",
         details:  "Alex Fraser Bridge, mid-span, looking south",
-        likes: 0,
         last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
     });
     routesRef.add({
@@ -59,7 +55,6 @@ function writeRoutes() {
         city: "Annacis Island",
         province: "BC",
         details:  "Alex Fraser Bridge, mid-span, looking north",
-        likes: 0,
         last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
     });
     routesRef.add({ 
@@ -68,7 +63,6 @@ function writeRoutes() {
         city: "New Westminster/Queensborough",
         province: "BC",
         details:  "Highway 91A at Boundary Road, looking west",
-        likes: 0,
         last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
     });
     routesRef.add({
@@ -77,7 +71,6 @@ function writeRoutes() {
         city: "New Westminster/Queensborough",
         province: "BC",
         details:  "Highway 91A at Boundary Road, looking east",
-        likes: 0,
         last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
     });
     routesRef.add({
@@ -86,7 +79,6 @@ function writeRoutes() {
         city: "Richmond",
         province: "BC",
         details:  "Highway 99 at Cambie Rd in Richmond, looking north",
-        likes: 0,
         last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
     });
     routesRef.add({
@@ -94,8 +86,7 @@ function writeRoutes() {
         name: "Highway 99 at Cambie Rd - S", //replace with your own city?
         city: "Richmond",
         province: "BC",
-        details:  "Highway 99 at Cambie Rd in Richmond, looking south",
-        likes: 0,
+        details:  "Highway 99 at Cambie Rd in Richmond, looking south",  
         last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
     });
     routesRef.add({
@@ -104,7 +95,6 @@ function writeRoutes() {
         city: "Vancouver",
         province: "BC",
         details:  "Oak Street at 70th Avenue, north approach to Oak Street Bridge, looking north on Oak Street",
-        likes: 0,
         last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
     });
     routesRef.add({
@@ -113,7 +103,6 @@ function writeRoutes() {
         city: "Vancouver",
         province: "BC",
         details:  "Oak Street at 70th Avenue, north approach to Oak Street Bridge, looking south to the bridge",
-        likes: 0,
         last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
     });
     routesRef.add({
@@ -121,8 +110,7 @@ function writeRoutes() {
         name: "Pattullo Bridge Northend - North", //replace with your own city?
         city: "New Westminster",
         province: "BC",
-        details:  "Pattullo Bridge at north end, in New Westminster, looking north",
-        likes: 0,
+        details:  "Pattullo Bridge at north end, in New Westminster, looking north", 
         last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
     });
     routesRef.add({
@@ -131,7 +119,6 @@ function writeRoutes() {
         city: "New Westminster",
         province: "BC",
         details:  "Pattullo Bridge at north end, in New Westminster, looking south",
-        likes: 0,
         last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
     });
     routesRef.add({
@@ -139,8 +126,7 @@ function writeRoutes() {
         name: "Kensington - E", //replace with your own city?
         city: "Burnaby",
         province: "BC",
-        details:  "Highway 1 at Kensington Avenue, looking east",
-        likes: 0,
+        details:  "Highway 1 at Kensington Avenue, looking east",      
         last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
     });
     routesRef.add({
@@ -148,8 +134,7 @@ function writeRoutes() {
         name: "Kensington - W", //replace with your own city?
         city: "Burnaby",
         province: "BC",
-        details:  "Highway 1 at Kensington Avenue, looking west",
-        likes: 0,
+        details:  "Highway 1 at Kensington Avenue, looking west",      
         last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
     });
 }
@@ -167,7 +152,6 @@ function displayCardsDynamically(collection) {
                 var title = doc.data().name;       // get value of the "name" key
                 var details = doc.data().details;  // get value of the "details" key
 				var routeCode = doc.data().code;    //get unique ID to each hike to be used for fetching right image
-                var likes = doc.data().likes;      // get value of "likes" key
                 var docID = doc.id;
                 let newcard = cardTemplate.content.cloneNode(true);
 
@@ -176,16 +160,10 @@ function displayCardsDynamically(collection) {
                 newcard.querySelector('.card-text').innerHTML = details;
                 newcard.querySelector('.card-image').src = `https://dummyimage.com/400x315/a6a6a6/fff`; //Example: NV01.jpg
                 newcard.querySelector('a').href = "eachRoute.html?docID=" + docID;
-                newcard.querySelector('.counter').innerHTML = likes; // set the like value
-
                 //Optional: give unique ids to all elements for future use
                 // newcard.querySelector('.card-title').setAttribute("id", "ctitle" + i);
                 // newcard.querySelector('.card-text').setAttribute("id", "ctext" + i);
                 // newcard.querySelector('.card-image').setAttribute("id", "cimage" + i);
-
-                //create unique ID's for each card
-                newcard.querySelector('.like-button').setAttribute("id", "cbutton" + i);
-                newcard.querySelector('.counter').setAttribute("id", "clikes" + i);
 
                 //attach to gallery, Example: "hikes-go-here"
                 document.getElementById(collection + "-go-here").appendChild(newcard);
@@ -197,20 +175,4 @@ function displayCardsDynamically(collection) {
 
 displayCardsDynamically("routes");  //input param is the name of the collection
 
-function insertNameFromFirestore(){
-    // to check if the user is logged in:
-    firebase.auth().onAuthStateChanged(user =>{
-        if (user){
-           console.log(user.uid); // let me to know who is the user that logged in to get the UID
-           currentUser = db.collection("users").doc(user.uid); // will to to the firestore and go to the document of the user
-           currentUser.get().then(userDoc=>{
-               //get the user name
-               var userName= userDoc.data().name;
-               console.log(userName);
-               //$("#name-goes-here").text(userName); //jquery
-               document.getElementById("name-goes-here").innerText=userName;
-           })    
-       }    
-    })
-}
-insertNameFromFirestore();
+
