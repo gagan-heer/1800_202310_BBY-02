@@ -1,4 +1,14 @@
+#card-image-container {
+  position: relative;
+}
 
+#logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 5px;
+  display: none;
+}
 
 .bottom-links {
   color: white;
@@ -8,6 +18,10 @@
 
 .bottom-links:hover {
   color: #e7e7e7;
+}
+
+.card {
+  margin: 5px;
 }
 
 @keyframes textclip {
