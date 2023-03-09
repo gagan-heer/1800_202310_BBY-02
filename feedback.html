@@ -48,24 +48,39 @@
 
     <!-- the body of your page goes here -->
     <!-- stuff -->
-    <div class="container text-center">
-        <h1><span id="routeName"> this hike</span></h1>
-        <img id="route-img" src="https://dummyimage.com/400x315/a6a6a6/fff"/>
-    </div>
-    <!---------feedback button-------------------->
     <div class="container">
-        <div class="position-relative">
-        <button class="btn btn-primary position-absolute bottom-0 end-0 m-3" onclick="saveHikeDocumentIDAndRedirect()">Feedback</button>
-        </div>
+        <br>
+        <h1>Report a bug for <span id="hikeName">the WeatherJam</span></h1>
+        <br>
+        <form>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Where did you run into the bug?</label>
+                <input type="text" class="form-control" id="input1" placeholder="">
+            </div><br>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Summarize the bug for us?</label>
+                <input type="text" class="form-control" id="input2" placeholder="">
+                    
+                <br>
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">I dont know what shoudl have to put?</label>
+                <input type="text" class="form-control" id="input3" placeholder="">
+                    
+                    <br>
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Any specifics you think we should know?</label>
+                    <textarea class="form-control" id="description" rows="3"></textarea>
+                </div>
+                <br>
+
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-lg btn-primary pull-right" onclick="writeReview()">Submit</button>
+                </div>
+                <br>
+        </form>
     </div>
-        <!-- Here is container for cards  -->
-        <div class="container">
-            <div id="reviewCardGroup" class="row row-cols-auto">
-            </div>
-        </div>
-</div>
-
-
+    
     <!-- our own footer goes here-->
     <nav id="footerPlaceholder"></nav>
 
@@ -74,7 +89,7 @@
     <!---------------------------------------------->
     <script src="./scripts/firebaseAPI_BBY02.js"></script>
     <script src="./scripts/skeleton.js"></script>
-    <script src="./scripts/eachRoute.js"></script>
+    <script src="scripts/review.js"></script>
     <!-- <script src="./scripts/script.js"></script> -->
 
 </body>
