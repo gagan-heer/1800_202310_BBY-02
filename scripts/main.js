@@ -139,6 +139,34 @@ function writeRoutes() {
     });
 }
 
+function writeLionsGate() {
+    var routesRef = db.collection("routes");
+    routesRef.add({
+        code: "KnightNorthendN", 
+        name: "Knight Street Bridge Northend - N",  
+        city: "Vancouver",
+        desc: "",
+        province: "BC",
+		details: "North end of Knight Street Bridge, looking north",
+        img: "http://images.drivebc.ca/bchighwaycam/pub/cameras/18.jpg",
+        last_updated: firebase.firestore.FieldValue.serverTimestamp()  //current system time
+    });
+}
+
+//a function that parse through a route's nearby event using coordinates parseRouteEvent(long, lat);
+function parseRouteEvent(long, lat) {
+    let 
+}
+
+//a function that add a description to a route
+
+
+//a function that loops the function that writes description every certain time
+
+
+//a function that notifies 
+
+
 //------------------------------------------------------------------------------
 // Input parameter is a string representing the collection we are reading from
 //------------------------------------------------------------------------------
@@ -151,14 +179,15 @@ function displayCardsDynamically(collection) {
             allRoutes.forEach(doc => { //iterate thru each doc
                 var title = doc.data().name;       // get value of the "name" key
                 var details = doc.data().details;  // get value of the "details" key
-				var routeCode = doc.data().code;    //get unique ID to each hike to be used for fetching right image
+				var routeCode = doc.data().code;    //get unique ID to each route to be used for fetching right image
+                var img = doc.data().img;           //get img
                 var docID = doc.id;
                 let newcard = cardTemplate.content.cloneNode(true);
 
                 //update title and text and image
                 newcard.querySelector('.card-title').innerHTML = title;
                 newcard.querySelector('.card-text').innerHTML = details;
-                newcard.querySelector('.card-image').src = `https://dummyimage.com/400x315/a6a6a6/fff`; //Example: NV01.jpg
+                newcard.querySelector('.card-image').src = img; //Example: NV01.jpg
                 newcard.querySelector('a').href = "eachRoute.html?docID=" + docID;
                 //Optional: give unique ids to all elements for future use
                 // newcard.querySelector('.card-title').setAttribute("id", "ctitle" + i);
