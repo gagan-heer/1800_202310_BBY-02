@@ -26,62 +26,43 @@
     <!-- Navbar -->
     <nav id="navbarPlaceholder"></nav>
 
-      <div class="container-fluid bg-light text-dark p-5">
-        <div class="container bg-light p-5">
-            <h1 class="display-4">Hello, <span id="name-goes-here"></span></h1>
-            <hr>
-            <p>Here are today's road conditions.</p>
-        </div>
+    <div class="container-fluid bg-light text-dark p-5">
+      <div class="container bg-light p-5">
+        <h1 class="display-4">Hello, <span id="name-goes-here"></span></h1>
+        <hr>
+        <p>Here are today's road conditions.</p>
+      </div>
     </div>
 
-      <div class="album py-5 bg-white">
+    <div class="album py-5 bg-white">
+      <div class="container">
+        <div class="container bg-white p-5">
+          <h1 class="display-4">Your Favourite Routes</h1>
+        </div>
+
+        <!-- Here is the container for favourite routes cards  -->
         <div class="container">
-            <div class="container bg-white p-5">
-                <h1 class="display-4">Your Favourite Routes</h1>
-            </div>
-          <div class="row">
-            <div class="col-md-4">
-              <div class="card mb-4 box-shadow">
-                <img class="card-img-top" src="https://dummyimage.com/400x315/a6a6a6/fff" alt="Card image cap">
-                <div class="card-body">
-                  <p class="card-text">Knight Street Bridge, Northbound</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <a href="#" class="btn btn-primary stretched-link">View Live Cam</a> 
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4 box-shadow">
-                  <img class="card-img-top" src="https://dummyimage.com/400x315/a6a6a6/fff" alt="Card image cap">
-                  <div class="card-body">
-                    <p class="card-text">Knight Street Bridge, Northbound</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                      <div class="btn-group">
-                        <a href="#" class="btn btn-primary stretched-link">View Live Cam</a> 
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="card mb-4 box-shadow">
-                  <img class="card-img-top" src="https://dummyimage.com/400x315/a6a6a6/fff" alt="Card image cap">
-                  <div class="card-body">
-                    <p class="card-text">Knight Street Bridge, Northbound</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                      <div class="btn-group">
-                        <a href="#" class="btn btn-primary stretched-link">View Live Cam</a> 
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>  
-          </div>
+          <div id="favourites-go-here" class="row row-cols-auto"></div>
         </div>
       </div>
+    </div>
+
+    <!-- Template to display favourite routes -->
+    <template id="favouritesCardTemplate">
+      <div class="card py-2 mx-2" style="width: 18rem">
+        <div id="card-image-container">
+          <img class="card-image card-img-top" src="..." alt="..." />
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">
+              Some quick example text to build on the card title and make up the
+              bulk of the card's content.
+          </p>
+          <a class="btn btn-primary card-href">View Live Cam</a>
+        </div>
+      </div>
+    </template>
 
 
       <div class="album py-5 bg-white">
@@ -89,7 +70,7 @@
           <div class="container bg-white p-5">
             <h1 class="display-4">Check these Routes Out</h1>
           </div>
-          <!-- Here is the container for cards  -->
+          <!-- Here is the container other routes cards  -->
           <div class="container">
               <div id="routes-go-here" class="row row-cols-auto">
               </div>
@@ -97,7 +78,7 @@
         </div>
       </div>
 
-      <!-- Templates for general use, not displayed -->
+      <!-- Templates for other routes -->
       <template id="routeCardTemplate">
         <div class="card py-2 mx-2" style="width: 18rem">
             <div id="card-image-container">
@@ -132,6 +113,7 @@
     <script src="./scripts/main.js"></script>
     <script src="./scripts/authentication.js"></script>
     <script src="./scripts/skeleton.js"></script>
+    <script src="./scripts/favourites.js"></script>
     
     <!-- <script> -->
       <!-- // -----------I ll add funtion later------------------ -->

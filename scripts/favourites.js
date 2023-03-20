@@ -28,35 +28,44 @@ function addToFavourites(routeId) {
     });
   }
   
+  // Checks if user is logged in and gets user ID to pass to displayFavsDynamically
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      const userId = user.uid;
+      displayFavsDynamically("favourites", userId);
+    } else {
+      console.log("User is not logged in.");
+    }
+  });
+  
 
-// Dynamically display Favourite Routes on home page
-function displayCardsDynamically(collection) {
+  // Dynamically display Favourite Routes on home page
+  function displayFavsDynamically(collection, userId) {
     let cardTemplate = document.getElementById("favouritesCardTemplate");
-
-    const userId = firebase.auth().currentUser.uid; // Get the ID of the curently logged in user
-
-    db.collection(collection).where("userId", "==", userId).get()   //the collection called "favourites"
-        .then(favouriteRoutes=> {
-            let i = 1;  //Optional: if you want to have a unique ID for each hike
-            favouriteRoutes.forEach(doc => { //iterate thru each doc
-                var title = doc.data().name;       // get value of the "name" key
-                var details = doc.data().details;  // get value of the "details" key
-				var routeCode = doc.data().code;    //get unique ID to each route to be used for fetching right image
-                var img = doc.data().img;           //get img
-                var docID = doc.id;
-                let newcard = cardTemplate.content.cloneNode(true);
-
-                //update title and text and image
-                newcard.querySelector('.card-title').innerHTML = title;
-                newcard.querySelector('.card-text').innerHTML = details;
-                newcard.querySelector('.card-image').src = img; //Example: NV01.jpg
-                newcard.querySelector('a').href = "eachRoute.html?docID=" + docID;
- 
-                document.getElementById(collection + "favourites-go-here").appendChild(newcard);
-
-                i++;   //Optional: iterate variable to serve as unique ID
-            })
+  
+    db.collection("users").doc(userId).collection(collection).get() // get the favorites collection of the current user
+      .then(favourites => {
+        let i = 1;
+        favourites.forEach(doc => {
+          var title = doc.data().name;
+          var details = doc.data().details;
+          var routeCode = doc.data().code;
+          var img = doc.data().img;
+          var docID = doc.id;
+          let newcard = cardTemplate.content.cloneNode(true);
+  
+          //update title and text and image
+          newcard.querySelector('.card-title').innerHTML = title;
+          newcard.querySelector('.card-text').innerHTML = details;
+          newcard.querySelector('.card-image').src = img;
+          newcard.querySelector('a').href = "eachRoute.html?docID=" + docID;
+  
+          document.getElementById(collection + "-go-here").appendChild(newcard);
+  
+          i++;
         })
-}
+      })
+      .catch(error => console.log(error));
+  }
 
-displayCardsDynamically("favourites");  //input param is the name of the collection
+displayFavsDynamically("favourites");  //input param is the name of the collection
