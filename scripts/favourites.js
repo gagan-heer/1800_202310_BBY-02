@@ -12,10 +12,16 @@ function addToFavourites(routeId) {
             // The product is already in the user's favorites, so remove it.
             favouritesRef.delete();
           } else {
-          const routeRef = firebase.firestore().collection("routes").doc(routeId);
+          const routeRef = firebase.firestore().collection("routes").doc(ID);
           routeRef.get().then((doc) => {
           favouritesRef.set({
-          docID: ID
+          name: doc.data().name,
+          city: doc.data().city,
+          code: doc.data().code,
+          province: doc.data().province,
+          details: doc.data().details,
+          img: doc.data().img,
+          desc: doc.data().desc
           });
         });
         }
