@@ -154,15 +154,45 @@ function writeLionsGate() {
 }
 
 //a function that parse through a route's nearby event using coordinates parseRouteEvent(long, lat);
-function parseRouteEvent(long, lat) {
-    let 
+//a function that add a description to a route
+function urlEvent(lat, long) {
+    return "https://api.open511.gov.bc.ca/events?geography=POINT(" + lat + "%20" + long + ")&tolerance=15000";
 }
 
-//a function that add a description to a route
+function ajaxGET(url, callback) {
 
+    const xhr = new XMLHttpRequest();
+
+    let value = null;
+
+    xhr.onload = function () {
+        value = this.responseText;
+        if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+            value = this.responseText;
+            callback(this.responseText);
+
+        } else {
+            console.log(this.status);
+        }
+    }
+    xhr.open("GET", url);
+    xhr.send();
+}
+
+function parseRouteEvent(long, lat) {
+    ajaxGET(urlEvent(long, lat), function (data) {
+        parsedData = JSON.parse(data);
+        let desc = "";
+        for(let i = 0; i < parsedData.length; i++){
+            desc += parsedData.events[i].description + "\n";
+        }
+        // document.getElementById("desc-text").innerHTML = desc; //must be desc for cards
+    }); 
+};
 
 //a function that loops the function that writes description every certain time
 
+//make sure to unhide danger logo when there is an event
 
 //a function that notifies 
 
@@ -203,5 +233,3 @@ function displayCardsDynamically(collection) {
 }
 
 displayCardsDynamically("routes");  //input param is the name of the collection
-
-
