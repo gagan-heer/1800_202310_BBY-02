@@ -55,10 +55,19 @@ function displayRouteInfo() {
             routeTitle = doc.data().name;
             lat = doc.data().lat;
             long = doc.data().long;
+            webcamUrl = thisRoute.webcamUrl;
+            staticImageUrl = thisRoute.img; 
+            routeDetails = thisRoute.details;
+            
+            // Set the initial src attribute of the img element to the static image URL
+           // document.getElementById("route-img").src = staticImageUrl;
+            
 
             parseRouteEvent(lat, long); //needs lat and long that is from firestore for specific routes
             document.getElementById( "routeName" ).innerHTML = routeTitle; 
-            document.getElementById("route-image").src("https://dummyimage.com/400x315/a6a6a6/fff");
+            document.getElementById( "webcam-frame" ).src = webcamUrl;
+            document.getElementById("route-details").innerHTML = routeDetails;
+            //document.getElementById("route-image").src("https://dummyimage.com/400x315/a6a6a6/fff");
             // let imgEvent = document.querySelector( "route-img" );
             // imgEvent.src = "https://dummyimage.com/400x315/a6a6a6/fff";
         } );
