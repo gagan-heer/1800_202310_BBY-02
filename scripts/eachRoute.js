@@ -1,12 +1,11 @@
 function urlEvent(lat, long) {
-    return "https://api.open511.gov.bc.ca/events?geography=POINT(" + lat + "%20" + long + ")&tolerance=1500";
+    return "https://api.open511.gov.bc.ca/events?geography=POINT(" + lat + "%20" + long + ")&tolerance=5000";
 }
 
 function ajaxGET(url, callback) {
 
     const xhr = new XMLHttpRequest();
 
-    // knock knock
     let value = null;
 
     xhr.onload = function () {
@@ -26,14 +25,15 @@ function ajaxGET(url, callback) {
 function parseRouteEvent(lat, long) {
     ajaxGET(urlEvent(lat, long), function (data) {
         parsedData = JSON.parse(data);
+
         let desc = "";
         for(let i = 0; i < parsedData.events.length; i++) {
             desc += parsedData.events[i].description + "\n" + "\n";
         }
 
-        // if(desc === "") {
-        //     desc = "No current event(s) for this route.";
-        // }
+        if(desc === "") {
+            desc = "No current event(s) for this route.";
+        }
 
         console.log(parsedData);
         document.getElementById("desc-text").innerHTML = desc;
@@ -45,8 +45,6 @@ function displayRouteInfo() {
     let params = new URL( window.location.href ); //get URL of search bar
     let ID = params.searchParams.get( "docID" ); //get value for key "id"
     
-    console.log( ID );
-
     // doublecheck: is your collection called "Reviews" or "reviews"?
     db.collection( "routes" )
         .doc( ID )
@@ -55,13 +53,15 @@ function displayRouteInfo() {
             thisRoute = doc.data();
             routeCode = thisRoute.code; 
             routeTitle = doc.data().name;
-            
+            lat = doc.data().lat;
+            long = doc.data().long;
 
-            // parseRouteEvent(); //needs lat and long that is from firestore for specific routes
+            parseRouteEvent(lat, long); //needs lat and long that is from firestore for specific routes
             document.getElementById( "routeName" ).innerHTML = routeTitle; 
             document.getElementById("route-image").src("https://dummyimage.com/400x315/a6a6a6/fff");
             // let imgEvent = document.querySelector( "route-img" );
             // imgEvent.src = "https://dummyimage.com/400x315/a6a6a6/fff";
         } );
+    console.log("Route updated.");
 }
-displayRouteInfo();
+setInterval(displayRouteInfo(), 15 * 1000);
