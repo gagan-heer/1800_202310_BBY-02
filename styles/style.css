@@ -25,3 +25,6 @@
   white-space: pre-line;
 }
 
+.btn.logout-btn {
+  color: white;
+}
