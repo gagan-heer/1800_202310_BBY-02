@@ -33,7 +33,7 @@
     <!-------------------------------------------->
     <!-- Other libraries and styles of your own -->
     <!-------------------------------------------->
-    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./styles/style.css">
 
 </head>
@@ -48,10 +48,14 @@
 
     <!-- the body of your page goes here -->
     <!-- stuff -->
-    <div class="container text-center">
+    <div id="eachRouteContainer" class="container text-center">
         <h1><span id="routeName"> this hike</span></h1>
-        <button class="btn btn-primary position-absolute top-50 end-0 m-100" onclick="addToFavourites()">Favourite</button>
-        <iframe id="webcam-frame" src="" width="640" height="400"></iframe>
+        <br>
+        <div class="icon-wrapper" onclick="addToFavourites()">
+        <i id="star_border" class="material-icons">star_border</i>
+        </div>
+        <br>
+        <div id="video"><iframe id="webcam-frame" src="" width="450" height="450"></iframe></div>
         <div id="route-details"></div>
         <div id="desc">
             <p class="lead" id="desc-text"></p>

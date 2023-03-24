@@ -1,4 +1,3 @@
-
 function addToFavourites(routeId) {
   const userId = firebase.auth().currentUser.uid; // Get the ID of the currently logged in user
 
@@ -13,6 +12,8 @@ function addToFavourites(routeId) {
       const removeConfirm = confirm('This route is already in your favourites. Do you want to remove it?');
       if (removeConfirm) {
         favouritesRef.delete();
+        // changes the icon of the route that was removed from favourites to "unfilled"
+        document.getElementById('star_border').innerText = 'star_border';
         alert('The route has been removed from your favourites.');
       }
     } else {
@@ -30,11 +31,15 @@ function addToFavourites(routeId) {
             desc: doc.data().desc
           });
         });
+        
+        //changes the icon of the route that was favourited to "filled"
+        document.getElementById('star_border').innerText = 'star';
         alert('The route has been added to your favourites.');
       }
     }
   });
 }
+        
   
   // Checks if user is logged in and gets user ID to pass to displayFavsDynamically
   firebase.auth().onAuthStateChanged(user => {
@@ -77,3 +82,34 @@ function addToFavourites(routeId) {
   }
 
 displayFavsDynamically("favourites");  //input param is the name of the collection
+
+
+// Listen for changes to the authentication state
+firebase.auth().onAuthStateChanged(function(user) {
+  // Call checkFavourites when the authentication state changes
+  checkFavourites();
+});
+
+// Checks if a route is already in the user's favourites to display star icon as filled
+function checkFavourites() {
+  const user = firebase.auth().currentUser; // Get the currently logged in user
+
+  if (user) { // Check if a user is logged in
+    const userId = user.uid;
+
+    let params = new URL(window.location.href); //get the url from the search bar
+    let ID = params.searchParams.get("docID"); 
+
+    const favouritesRef = firebase.firestore().collection("users").doc(userId).collection("favourites").doc(ID); // Create a reference to the user's favourites list
+    favouritesRef.get().then((doc) => {
+        if (doc.exists) {
+            document.getElementById('star_border').innerText = 'star';
+          } else {
+            document.getElementById('star_border').innerText = 'star_border';
+          }
+    })
+  } else {
+    console.log("No user logged in");
+  }
+}
+
