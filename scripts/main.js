@@ -19,29 +19,13 @@ function insertName() {
 }
 insertName(); //run the function
 
-//*******************************************************************************************/
-//***************************** Route data **************************************************/
-
-
-// function writeLionsGate() {
-//     var routesRef = db.collection("routes");
-//     routesRef.add({
-//         code: "KnightNorthendN", 
-//         name: "Knight Street Bridge Northend - N",  
-//         city: "Vancouver",
-//         desc: "",
-//         province: "BC",
-// 		details: "North end of Knight Street Bridge, looking north",
-//         img: "http://images.drivebc.ca/bchighwaycam/pub/cameras/18.jpg",
-//         last_updated: firebase.firestore.FieldValue.serverTimestamp()  //current system time
-//     });
-// }
-
 //a function that parse through a route's nearby event using coordinates parseRouteEvent(long, lat);
 //a function that add a description to a route
-function urlEvent(lat, long) {
-    return "https://api.open511.gov.bc.ca/events?geography=POINT(" + lat + "%20" + long + ")&tolerance=15000";
-}
+// function urlEvent(lat, long) {
+//     return "https://api.open511.gov.bc.ca/events?geography=POINT(" + lat + "%20" + long + ")&tolerance=15000";
+// }
+
+
 
 function ajaxGET(url, callback) {
 
@@ -117,3 +101,22 @@ function displayCardsDynamically(collection) {
   }
   
   displayCardsDynamically("routes");  //input param is the name of the collection
+
+
+//*******************************************************************************************/
+//***************************** Route data **************************************************/
+
+
+// function writeLionsGate() {
+//     var routesRef = db.collection("routes");
+//     routesRef.add({
+//         code: "KnightNorthendN", 
+//         name: "Knight Street Bridge Northend - N",  
+//         city: "Vancouver",
+//         desc: "",
+//         province: "BC",
+// 		details: "North end of Knight Street Bridge, looking north",
+//         img: "http://images.drivebc.ca/bchighwaycam/pub/cameras/18.jpg",
+//         last_updated: firebase.firestore.FieldValue.serverTimestamp()  //current system time
+//     });
+// }

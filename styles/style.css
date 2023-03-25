@@ -37,8 +37,12 @@
   float: right;
 }
 
+.dropdown-menu a{
+  width: 300px;
+  white-space: normal;
+}
 
-
-
-
+.dropdown {
+  margin-right: 10px;
+}
 

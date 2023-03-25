@@ -73,4 +73,4 @@ function displayRouteInfo() {
         } );
     console.log("Route updated.");
 }
-setInterval(displayRouteInfo(), 15 * 1000);
+displayRouteInfo();
