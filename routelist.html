@@ -53,6 +53,12 @@
           <div class="container bg-white p-5">
             <h1 class="display-4">Routes list</h1>
           </div>
+
+          <!-------- Search bar ------->
+          <form class="d-flex">
+            <input id="myInput" class="form-control me-2" type="search" onkeyup="searchRoutes()" placeholder="Search routes" aria-label="Search">
+          </form>
+          
           <!-- Here is the container for cards  -->
           <div class="container">
               <div id="routes-go-here" class="row row-cols-auto">
@@ -91,6 +97,7 @@
     <script src="./scripts/skeleton.js"></script>
     <script src="./scripts/routelist.js"></script>
     <script src="./scripts/script.js"></script>
+    <script src="./scripts/searchRoutes.js"></script>
     <!-- <script src="./scripts/script.js"></script> -->
 
 </body>
