@@ -136,13 +136,45 @@ function findRouteLink(lat, long, numOfNotification, userId) {
   })
 }
 
+
+
+function hasEvent(lat, long, callback) {
+  ajaxGET(urlEvent(lat, long), function (data) {
+      parsedData = JSON.parse(data);
+
+      let desc = "";
+      for(let i = 0; i < parsedData.events.length; i++) {
+          desc += parsedData.events[i].description + "\n" + "\n";
+      }
+
+      if(desc === "") {
+          callback(false);
+      } else {
+        callback(true);
+      }
+  }); 
+};
+
+//each routecard template has a 
+function checkEvent(lat, long, classNumber) {
+  hasEvent(lat, long, function(hasEventResult) {
+    let icon = document.getElementById("logo");
+    let newIcon = icon.content.cloneNode(true);
+    
+    if(hasEventResult == true){
+      document.getElementsByClassName("routeNumber")[classNumber].append(newIcon);
+    }
+  });
+}
+
+
   // Dynamically display Favourite Routes on home page
-  function displayFavsDynamically(collection, userId) {
+function displayFavsDynamically(collection, userId) {
     let cardTemplate = document.getElementById("favouritesCardTemplate");
   
     db.collection("users").doc(userId).collection(collection).get() // get the favorites collection of the current user
       .then(favourites => {
-        let i = 1;
+        let i = 0;
         favourites.forEach(doc => {
           var title = doc.data().name;
           var details = doc.data().details;
@@ -158,9 +190,10 @@ function findRouteLink(lat, long, numOfNotification, userId) {
           newcard.querySelector('.card-text').innerHTML = details;
           newcard.querySelector('.card-image').src = img;
           newcard.querySelector('a').href = "eachRoute.html?docID=" + docID;
-  
+
           document.getElementById(collection + "-go-here").appendChild(newcard);
-          
+          checkEvent(lat, long, i);
+
           //this goes through the favourite routes and logs the events that happen
           //within specified time.
           updatedHours(lat, long);

@@ -65,6 +65,7 @@ function parseRouteEvent(long, lat) {
 //a function that notifies 
 
 
+
 //------------------------------------------------------------------------------
 // Input parameter is a string representing the collection we are reading from
 //------------------------------------------------------------------------------
@@ -76,7 +77,7 @@ function displayCardsDynamically(collection) {
       "HW91ABoundaryW","KnightNorthendS" ])
       .get()
       .then((querySnapshot) => {
-        let i = 1;
+        let i = 0;
         querySnapshot.forEach((doc) => {
           var title = doc.data().name;
           var details = doc.data().details;
@@ -84,6 +85,8 @@ function displayCardsDynamically(collection) {
           var img = doc.data().img;
           var docID = doc.id;
           let newcard = cardTemplate.content.cloneNode(true);
+          lat = doc.data().lat;
+          long = doc.data().long;
   
           newcard.querySelector('.card-title').innerHTML = title;
           newcard.querySelector('.card-text').innerHTML = details;
@@ -91,7 +94,8 @@ function displayCardsDynamically(collection) {
           newcard.querySelector('a').href = "eachRoute.html?docID=" + docID;
   
           document.getElementById(collection + "-go-here").appendChild(newcard);
-  
+          checkEvent(lat, long, i);
+
           i++;
         })
       })
@@ -102,21 +106,3 @@ function displayCardsDynamically(collection) {
   
   displayCardsDynamically("routes");  //input param is the name of the collection
 
-
-//*******************************************************************************************/
-//***************************** Route data **************************************************/
-
-
-// function writeLionsGate() {
-//     var routesRef = db.collection("routes");
-//     routesRef.add({
-//         code: "KnightNorthendN", 
-//         name: "Knight Street Bridge Northend - N",  
-//         city: "Vancouver",
-//         desc: "",
-//         province: "BC",
-// 		details: "North end of Knight Street Bridge, looking north",
-//         img: "http://images.drivebc.ca/bchighwaycam/pub/cameras/18.jpg",
-//         last_updated: firebase.firestore.FieldValue.serverTimestamp()  //current system time
-//     });
-// }

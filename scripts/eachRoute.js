@@ -40,7 +40,6 @@ function parseRouteEvent(lat, long) {
     }); 
 };
 
-
 function displayRouteInfo() {
     let params = new URL( window.location.href ); //get URL of search bar
     let ID = params.searchParams.get( "docID" ); //get value for key "id"

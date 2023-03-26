@@ -2,12 +2,12 @@
   position: relative;
 }
 
-#logo {
+.routeNumber {
   position: absolute;
   top: 0;
   left: 0;
   margin: 5px;
-  display: none;
+  display: inline-block;
 }
 
 .card {

@@ -1,3 +1,26 @@
+function urlEvent(lat, long) {
+    return "https://api.open511.gov.bc.ca/events?geography=POINT(" + lat + "%20" + long + ")&tolerance=5000";
+}
+
+function ajaxGET(url, callback) {
+
+    const xhr = new XMLHttpRequest();
+
+    let value = null;
+
+    xhr.onload = function () {
+        value = this.responseText;
+        if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+            value = this.responseText;
+            callback(this.responseText);
+
+        } else {
+            console.log(this.status);
+        }
+    }
+    xhr.open("GET", url);
+    xhr.send();
+}
 
 function insertName() {
     firebase.auth().onAuthStateChanged(user => {
@@ -19,153 +42,97 @@ function insertName() {
 }
 insertName(); //run the function
 
-//*******************************************************************************************/
-//***************************** Route data **************************************************/
-function writeRoutes() {
-    //define a variable for the collection you want to create in Firestore to populate data
-    var routesRef = db.collection("routes");
 
-    routesRef.add({
-        code: "KnightNorthendN", 
-        name: "Knight Street Bridge Northend - N",  
-        city: "Vancouver",
-        province: "BC",
-		details: "North end of Knight Street Bridge, looking north",
-        last_updated: firebase.firestore.FieldValue.serverTimestamp()  //current system time
-    });
-    routesRef.add({
-        code: "KnightNorthendS",
-        name: "Knight Street Bridge Northend - S", 
-        city: "Vancouver",
-        province: "BC",
-        details: "North end of Knight STreet Bridge, looking south",
-        last_updated: firebase.firestore.Timestamp.fromDate(new Date("March 10, 2022"))
-    });
-    routesRef.add({
-        code: "AlexFraserS",
-        name: "Alex Fraser Bridge - Southbound", //replace with your own city?
-        city: "Annacis Island",
-        province: "BC",
-        details:  "Alex Fraser Bridge, mid-span, looking south",
-        last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
-    });
-    routesRef.add({
-        code: "AlexFraserN",
-        name: "Alex Fraser Bridge - Northbound", //replace with your own city?
-        city: "Annacis Island",
-        province: "BC",
-        details:  "Alex Fraser Bridge, mid-span, looking north",
-        last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
-    });
-    routesRef.add({ 
-        code: "HW91ABoundaryW",
-        name: "Hi91ghway A at Boundary Rd - W", //replace with your own city?
-        city: "New Westminster/Queensborough",
-        province: "BC",
-        details:  "Highway 91A at Boundary Road, looking west",
-        last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
-    });
-    routesRef.add({
-        code: "HW91ABoundaryE",
-        name: "Highway 91A at Boundary Rd - E", //replace with your own city?
-        city: "New Westminster/Queensborough",
-        province: "BC",
-        details:  "Highway 91A at Boundary Road, looking east",
-        last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
-    });
-    routesRef.add({
-        code: "HW99CambieN",
-        name: "Highway 99 at Cambie Rd - N", //replace with your own city?
-        city: "Richmond",
-        province: "BC",
-        details:  "Highway 99 at Cambie Rd in Richmond, looking north",
-        last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
-    });
-    routesRef.add({
-        code: "HW99CambieS",
-        name: "Highway 99 at Cambie Rd - S", //replace with your own city?
-        city: "Richmond",
-        province: "BC",
-        details:  "Highway 99 at Cambie Rd in Richmond, looking south",  
-        last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
-    });
-    routesRef.add({
-        code: "Oak70N",
-        name: "Oak St at 70th - N", //replace with your own city?
-        city: "Vancouver",
-        province: "BC",
-        details:  "Oak Street at 70th Avenue, north approach to Oak Street Bridge, looking north on Oak Street",
-        last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
-    });
-    routesRef.add({
-        code: "Oak70S",
-        name: "Oak St at 70th - S", //replace with your own city?
-        city: "Vancouver",
-        province: "BC",
-        details:  "Oak Street at 70th Avenue, north approach to Oak Street Bridge, looking south to the bridge",
-        last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
-    });
-    routesRef.add({
-        code: "PattulloNorthendN",
-        name: "Pattullo Bridge Northend - North", //replace with your own city?
-        city: "New Westminster",
-        province: "BC",
-        details:  "Pattullo Bridge at north end, in New Westminster, looking north", 
-        last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
-    });
-    routesRef.add({
-        code: "PattulloNorthendS",
-        name: "Pattullo Bridge Northend - South", //replace with your own city?
-        city: "New Westminster",
-        province: "BC",
-        details:  "Pattullo Bridge at north end, in New Westminster, looking south",
-        last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
-    });
-    routesRef.add({
-        code: "KensingtonE",
-        name: "Kensington - E", //replace with your own city?
-        city: "Burnaby",
-        province: "BC",
-        details:  "Highway 1 at Kensington Avenue, looking east",      
-        last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
-    });
-    routesRef.add({
-        code: "KensingtonW",
-        name: "Kensington - W", //replace with your own city?
-        city: "Burnaby",
-        province: "BC",
-        details:  "Highway 1 at Kensington Avenue, looking west",      
-        last_updated: firebase.firestore.Timestamp.fromDate(new Date("January 1, 2023"))
-    });
+//this function goes through the route collections and then compares the lat and long of
+//parameter to the routes. if its the same then the route link is assigned to the specific
+//anchored tag.
+function findRouteLink(lat, long, numOfNotification, userId) {  
+    let params = new URL( window.location.href ); //get URL of search bar
+    let ID = params.searchParams.get( "docID" ); //get value for key "id"
+    
+    db.collection("routes").get()
+    .then(allRoutes=> {
+        let routeLink = "";
+        allRoutes.forEach(doc => { //iterate thru each doc
+            var docID = doc.id;
+            let docLat = doc.data().lat;
+            let docLong = doc.data().long;
+  
+            if(docLat == lat && docLong == long){
+              routeLink = "eachRoute.html?docID=" + docID;
+              document.getElementById("content-" + numOfNotification).href = routeLink;
+            }
+        })
+    })
+  }
+  
+
+  //this goes through the specific route and then compares the time updated and current time
+//then logs the description that is below the specific time.
+//
+//this also counts how many notifications there are then uses the count to assign a number
+//to the content-#, allowing a systematic assignment of links.
+let count = 0;
+//the lat/long is from the favourite collections so that only favourite routes are parsed through
+function updatedHours(lat, long){
+  ajaxGET(urlEvent(lat, long), function (data) {
+    parsedData = JSON.parse(data);
+    let currentTime = new Date();
+    var sentence = "";
+
+    for(let i = 0; i < parsedData.events.length; i++){
+      let difference_s = (new Date(parsedData.events[i].updated).getTime() - currentTime.getTime()) / -1000;
+      let difference_m = difference_s / 60;
+      let difference_h = difference_m / 60;
+      let temp = parsedData.events[i].description;
+    
+      if(difference_h < 500){ //this is looking for all favourite route's events less than 500h ago.
+        //because of cutting words off some text may look the same even though they are entirely different events
+        //discuss what to do, wether to keep short text or give long text. or find more patterns with their desc.
+        if(temp.indexOf("Starting") > -1){
+          sentence = sentence.concat("<li><a class=\"dropdown-item\" href=\"#\" id=\"content-", count, "\">", temp.substring(0, temp.indexOf("Starting")),"</a></li>");
+        } else {
+          sentence = sentence.concat("<li><a class=\"dropdown-item\" href=\"#\" id=\"content-", count, "\">", temp.substring(0, temp.indexOf("Until")),"</a></li>");
+        }
+        findRouteLink(lat,long, count);
+        count++;
+      }
+    }
+    document.getElementById("dropdown-notifications").innerHTML += sentence;
+
+    document.getElementById("notification-count").innerHTML = count;
+  });
 }
 
-function writeLionsGate() {
-    var routesRef = db.collection("routes");
-    routesRef.add({
-        code: "KnightNorthendN", 
-        name: "Knight Street Bridge Northend - N",  
-        city: "Vancouver",
-        desc: "",
-        province: "BC",
-		details: "North end of Knight Street Bridge, looking north",
-        img: "http://images.drivebc.ca/bchighwaycam/pub/cameras/18.jpg",
-        last_updated: firebase.firestore.FieldValue.serverTimestamp()  //current system time
+
+function hasEvent(lat, long, callback) {
+    ajaxGET(urlEvent(lat, long), function (data) {
+        parsedData = JSON.parse(data);
+  
+        let desc = "";
+        for(let i = 0; i < parsedData.events.length; i++) {
+            desc += parsedData.events[i].description + "\n" + "\n";
+        }
+  
+        if(desc === "") {
+            callback(false);
+        } else {
+          callback(true);
+        }
+    }); 
+};
+  
+  //each routecard template has a 
+function checkEvent(lat, long, classNumber) {
+    hasEvent(lat, long, function(hasEventResult) {
+        let icon = document.getElementById("logo");
+        let newIcon = icon.content.cloneNode(true);
+
+        if(hasEventResult == true){
+            document.getElementsByClassName("routeNumber")[classNumber].append(newIcon);
+        }
     });
 }
-
-//a function that parse through a route's nearby event using coordinates parseRouteEvent(long, lat);
-function parseRouteEvent(long, lat) {
-    let 
-}
-
-//a function that add a description to a route
-
-
-//a function that loops the function that writes description every certain time
-
-
-//a function that notifies 
-
 
 //------------------------------------------------------------------------------
 // Input parameter is a string representing the collection we are reading from
@@ -175,7 +142,7 @@ function displayCardsDynamically(collection) {
 
     db.collection(collection).get()   //the collection called "hikes"
         .then(allRoutes=> {
-            let i = 1;  //Optional: if you want to have a unique ID for each hike
+            let i = 0;  //Optional: if you want to have a unique ID for each hike
             allRoutes.forEach(doc => { //iterate thru each doc
                 var title = doc.data().name;       // get value of the "name" key
                 var details = doc.data().details;  // get value of the "details" key
@@ -183,19 +150,21 @@ function displayCardsDynamically(collection) {
                 var img = doc.data().img;           //get img
                 var docID = doc.id;
                 let newcard = cardTemplate.content.cloneNode(true);
+                lat = doc.data().lat;
+                long = doc.data().long
 
                 //update title and text and image
                 newcard.querySelector('.card-title').innerHTML = title;
                 newcard.querySelector('.card-text').innerHTML = details;
-                newcard.querySelector('.card-image').src = img; //Example: NV01.jpg
+                newcard.querySelector('.card-image').src = img;
                 newcard.querySelector('a').href = "eachRoute.html?docID=" + docID;
-                //Optional: give unique ids to all elements for future use
-                // newcard.querySelector('.card-title').setAttribute("id", "ctitle" + i);
-                // newcard.querySelector('.card-text').setAttribute("id", "ctext" + i);
-                // newcard.querySelector('.card-image').setAttribute("id", "cimage" + i);
+
 
                 //attach to gallery, Example: "hikes-go-here"
                 document.getElementById(collection + "-go-here").appendChild(newcard);
+                checkEvent(lat, long, i);
+
+                updatedHours(lat, long);
 
                 i++;   //Optional: iterate variable to serve as unique ID
             })
