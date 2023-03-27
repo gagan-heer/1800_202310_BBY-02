@@ -22,17 +22,18 @@ function ajaxGET(url, callback) {
   xhr.send();
 }
 
+// Adds and removes a route from the user's Favourites collection
 function addToFavourites(routeId) {
   const userId = firebase.auth().currentUser.uid; // Get the ID of the currently logged in user
 
-  let params = new URL(window.location.href); //get the url from the search bar
+  let params = new URL(window.location.href); //Get the url from the search bar
   let ID = params.searchParams.get("docID");
 
   const routeRef = firebase.firestore().collection("routes").doc(routeId); // Get route info
   const favouritesRef = firebase.firestore().collection("users").doc(userId).collection("favourites").doc(ID); // Create a reference to the user's favourites list
   favouritesRef.get().then((doc) => {
     if (doc.exists) {
-      // The product is already in the user's favorites, so remove it.
+      // The route is already in the user's favorites, so remove it.
       const removeConfirm = confirm('This route is already in your favourites. Do you want to remove it?');
       if (removeConfirm) {
         favouritesRef.delete();
@@ -41,6 +42,7 @@ function addToFavourites(routeId) {
         alert('The route has been removed from your favourites.');
       }
     } else {
+      // The route is not yet in the user's Favourites so it is added
       const addConfirm = confirm('Do you want to add this route to your favourites?');
       if (addConfirm) {
         const routeRef = firebase.firestore().collection("routes").doc(ID);
@@ -203,7 +205,7 @@ function displayFavsDynamically(collection, userId) {
       .catch(error => console.log(error));
   }
 
-displayFavsDynamically("favourites");  //input param is the name of the collection
+displayFavsDynamically("favourites");  
 
 
 // Listen for changes to the authentication state

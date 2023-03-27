@@ -40,11 +40,12 @@ function parseRouteEvent(lat, long) {
     }); 
 };
 
+// Displays route information for each route's page
 function displayRouteInfo() {
     let params = new URL( window.location.href ); //get URL of search bar
     let ID = params.searchParams.get( "docID" ); //get value for key "id"
     
-    // doublecheck: is your collection called "Reviews" or "reviews"?
+    // Receives route information from Firestore "routes" collection
     db.collection( "routes" )
         .doc( ID )
         .get()
@@ -58,17 +59,11 @@ function displayRouteInfo() {
             staticImageUrl = thisRoute.img; 
             routeDetails = thisRoute.details;
             
-            // Set the initial src attribute of the img element to the static image URL
-           // document.getElementById("route-img").src = staticImageUrl;
-            
 
             parseRouteEvent(lat, long); //needs lat and long that is from firestore for specific routes
             document.getElementById( "routeName" ).innerHTML = routeTitle; 
             document.getElementById( "webcam-frame" ).src = webcamUrl;
             document.getElementById("route-details").innerHTML = routeDetails;
-            //document.getElementById("route-image").src("https://dummyimage.com/400x315/a6a6a6/fff");
-            // let imgEvent = document.querySelector( "route-img" );
-            // imgEvent.src = "https://dummyimage.com/400x315/a6a6a6/fff";
         } );
     console.log("Route updated.");
 }
