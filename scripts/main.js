@@ -90,7 +90,6 @@ function displayCardsDynamically(collection) {
           newcard.querySelector('a').href = "eachRoute.html?docID=" + docID;
   
           document.getElementById(collection + "-go-here").appendChild(newcard);
-          checkEvent(lat, long, i);
 
           i++;
         })

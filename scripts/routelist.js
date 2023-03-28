@@ -143,13 +143,35 @@ function displayCardsDynamically(collection) {
                 document.getElementById(collection + "-go-here").appendChild(newcard);
                 checkEvent(lat, long, i);
 
-                updatedHours(lat, long);
+                // updatedHours(lat, long);
 
                 i++;   //Optional: iterate variable to serve as unique ID
             })
         })
 }
 
+firebase.auth().onAuthStateChanged(user => {
+  if (user) {
+    const userId = user.uid;
+    displayFavsDynamically("favourites", userId);
+  } else {
+    console.log("User is not logged in.");
+  } 
+});
+
 displayCardsDynamically("routes");  //input param is the name of the collection
+  //  notification display
+function displayFavsDynamically(collection, userId) {  
 
-
+  db.collection("users").doc(userId).collection(collection).get() // get the favorites collection of the current user
+    .then(favourites => {
+      favourites.forEach(doc => {
+        lat = doc.data().lat;
+        long = doc.data().long;
+        //this goes through the favourite routes and logs the events that happen
+        //within specified time.
+        updatedHours(lat, long);
+      })
+    })
+    .catch(error => console.log(error));
+}

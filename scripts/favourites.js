@@ -1,7 +1,3 @@
-function urlEvent(lat, long) {
-  return "https://api.open511.gov.bc.ca/events?geography=POINT(" + lat + "%20" + long + ")&tolerance=5000";
-}
-
 function ajaxGET(url, callback) {
 
   const xhr = new XMLHttpRequest();
@@ -20,6 +16,10 @@ function ajaxGET(url, callback) {
   }
   xhr.open("GET", url);
   xhr.send();
+}
+
+function urlEvent(lat, long) {
+  return "https://api.open511.gov.bc.ca/events?geography=POINT(" + lat + "%20" + long + ")&tolerance=5000";
 }
 
 // Adds and removes a route from the user's Favourites collection
@@ -173,7 +173,8 @@ function checkEvent(lat, long, classNumber) {
   // Dynamically display Favourite Routes on home page
 function displayFavsDynamically(collection, userId) {
     let cardTemplate = document.getElementById("favouritesCardTemplate");
-  
+    console.log(userId);
+
     db.collection("users").doc(userId).collection(collection).get() // get the favorites collection of the current user
       .then(favourites => {
         let i = 0;
