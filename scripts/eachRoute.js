@@ -1,19 +1,14 @@
+
 function urlEvent(lat, long) {
     return "https://api.open511.gov.bc.ca/events?geography=POINT(" + lat + "%20" + long + ")&tolerance=5000";
 }
 
 function ajaxGET(url, callback) {
-
     const xhr = new XMLHttpRequest();
 
-    let value = null;
-
     xhr.onload = function () {
-        value = this.responseText;
         if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-            value = this.responseText;
             callback(this.responseText);
-
         } else {
             console.log(this.status);
         }
@@ -22,23 +17,36 @@ function ajaxGET(url, callback) {
     xhr.send();
 }
 
+// Parses route traffic event data and displays events for each route in cards
 function parseRouteEvent(lat, long) {
     ajaxGET(urlEvent(lat, long), function (data) {
         parsedData = JSON.parse(data);
 
+        let events = parsedData.events.sort(function(a, b) {
+            return new Date(b.updated) - new Date(a.updated);
+        });
+
         let desc = "";
-        for(let i = 0; i < parsedData.events.length; i++) {
-            desc += parsedData.events[i].description + "\n" + "\n";
+        for(let i = 0; i < events.length; i++) {
+            let updatedDate = new Date(events[i].updated);
+            let formattedDate = updatedDate.toLocaleDateString('en-US', {weekday: 'short', month: 'short', day: 'numeric'}) 
+                + " at " + updatedDate.toLocaleTimeString('en-US', {hour: 'numeric', minute: 'numeric'}) 
+                + " " + updatedDate.toLocaleTimeString('en-US', {timeZoneName: 'short'}).split(' ')[2];
+
+            desc += "<div class='card'><div class='card-header'>" + events[i].event_type 
+            + "</div><div class='card-body'><p class='card-text'>" + events[i].description 
+            + "</p></div><div class='card-footer text-muted'>" + "Last Updated: " + formattedDate + "</div></div>";
         }
 
         if(desc === "") {
             desc = "No current event(s) for this route.";
         }
 
-        console.log(parsedData);
         document.getElementById("desc-text").innerHTML = desc;
     }); 
 };
+
+
 
 // Displays route information for each route's page
 function displayRouteInfo() {
