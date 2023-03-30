@@ -39,17 +39,12 @@
 </head>
 
 <body>
-    <!------------------------------>
-    <!-- Your HTML Layout go here -->
-    <!------------------------------>
-
-    <!-- our own navbar goes here -->
+    <!-- Navbar -->
     <nav id="navbarPlaceholder"></nav>
 
-    <!-- the body of your page goes here -->
-    <!-- stuff -->
+    <!-- the body of the page goes here -->
     <div id="eachRouteContainer" class="container text-center">
-        <h1><span id="routeName"> this hike</span></h1>
+        <h1><span id="routeName"> </span></h1>
         <br>
         <div class="icon-wrapper" onclick="addToFavourites()">
         <i id="star_border" class="material-icons">star_border</i>
@@ -62,24 +57,20 @@
         </div>
     </div>
     <!---------feedback button-------------------->
+    <br><br>
     <div class="container">
         <div class="position-relative">
             <a href="feedback.html" class="btn btn-primary position-absolute bottom-0 end-0 m-3">Feedback</a>         
         </div>
     </div>
-        <!-- Here is container for cards  -->
-        <div class="container">
-            <div id="reviewCardGroup" class="row row-cols-auto">
-            </div>
-        </div>
-</div>
+        
 
 
-    <!-- our own footer goes here-->
+    <!------------ Footer ----------->
     <nav id="footerPlaceholder"></nav>
 
     <!---------------------------------------------->
-    <!-- Your own JavaScript functions go here    -->
+    <!-----------JavaScript functions--------------->
     <!---------------------------------------------->
     <script src="./scripts/firebaseAPI_BBY02.js"></script>
     <script src="./scripts/skeleton.js"></script>

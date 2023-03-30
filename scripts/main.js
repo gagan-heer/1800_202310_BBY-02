@@ -3,14 +3,11 @@ function insertName() {
     firebase.auth().onAuthStateChanged(user => {
         // Check if a user is signed in:
         if (user) {
-            // Do something for the currently logged-in user here: 
             console.log(user.uid); //print the uid in the browser console
             console.log(user.displayName);  //print the user name in the browser console
             user_Name = user.displayName;
-            //method #1:  insert with html only
-            //document.getElementById("name-goes-here").innerText = user_Name;    //using javascript
-            //method #2:  insert using jquery
-            $("#name-goes-here").text(user_Name); //using jquery
+            //insert using jquery
+            $("#name-goes-here").text(user_Name); 
 
         } else {
             // No user is signed in.
@@ -83,7 +80,7 @@ function getRandomDocs(n, docsArray) {
   }
   
 //------------------------------------------------------------------------------
-// Input parameter is a string representing the collection we are reading from
+// Displays routes from the "routes" collection in Firestore dynamically
 //------------------------------------------------------------------------------
 function displayCardsDynamically(collection) {
     let cardTemplate = document.getElementById("routeCardTemplate");
@@ -103,7 +100,6 @@ function displayCardsDynamically(collection) {
         randomDocs.forEach((doc) => {
           var title = doc.data().name;
           var details = doc.data().details;
-          var routeCode = doc.data().code;
           var img = doc.data().img;
           var docID = doc.id;
           let newcard = cardTemplate.content.cloneNode(true);

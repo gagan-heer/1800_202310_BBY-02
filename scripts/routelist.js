@@ -22,26 +22,6 @@ function ajaxGET(url, callback) {
     xhr.send();
 }
 
-function insertName() {
-    firebase.auth().onAuthStateChanged(user => {
-        // Check if a user is signed in:
-        if (user) {
-            // Do something for the currently logged-in user here: 
-            console.log(user.uid); //print the uid in the browser console
-            console.log(user.displayName);  //print the user name in the browser console
-            user_Name = user.displayName;
-            //method #1:  insert with html only
-            //document.getElementById("name-goes-here").innerText = user_Name;    //using javascript
-            //method #2:  insert using jquery
-            $("#name-goes-here").text(user_Name); //using jquery
-
-        } else {
-            // No user is signed in.
-        }
-    });
-}
-insertName(); //run the function
-
 
 //this function goes through the route collections and then compares the lat and long of
 //parameter to the routes. if its the same then the route link is assigned to the specific
@@ -135,7 +115,7 @@ function checkEvent(lat, long, classNumber) {
 }
 
 //------------------------------------------------------------------------------
-// Input parameter is a string representing the collection we are reading from
+// Displays routes from the "routes" collection from Firestore dynamically
 //------------------------------------------------------------------------------
 function displayCardsDynamically(collection) {
     let cardTemplate = document.getElementById("routeCardTemplate");
@@ -146,7 +126,6 @@ function displayCardsDynamically(collection) {
             allRoutes.forEach(doc => { //iterate thru each doc
                 var title = doc.data().name;       // get value of the "name" key
                 var details = doc.data().details;  // get value of the "details" key
-				var routeCode = doc.data().code;    //get unique ID to each route to be used for fetching right image
                 var img = doc.data().img;           //get img
                 var docID = doc.id;
                 let newcard = cardTemplate.content.cloneNode(true);
@@ -160,17 +139,39 @@ function displayCardsDynamically(collection) {
                 newcard.querySelector('a').href = "eachRoute.html?docID=" + docID;
 
 
-                //attach to gallery, Example: "hikes-go-here"
+                //attach to gallery
                 document.getElementById(collection + "-go-here").appendChild(newcard);
                 checkEvent(lat, long, i);
 
-                updatedHours(lat, long);
+                // updatedHours(lat, long);
 
                 i++;   //Optional: iterate variable to serve as unique ID
             })
         })
 }
 
+firebase.auth().onAuthStateChanged(user => {
+  if (user) {
+    const userId = user.uid;
+    displayFavsDynamically("favourites", userId);
+  } else {
+    console.log("User is not logged in.");
+  } 
+});
+
 displayCardsDynamically("routes");  //input param is the name of the collection
+  //  notification display
+function displayFavsDynamically(collection, userId) {  
 
-
+  db.collection("users").doc(userId).collection(collection).get() // get the favorites collection of the current user
+    .then(favourites => {
+      favourites.forEach(doc => {
+        lat = doc.data().lat;
+        long = doc.data().long;
+        //this goes through the favourite routes and logs the events that happen
+        //within specified time.
+        updatedHours(lat, long);
+      })
+    })
+    .catch(error => console.log(error));
+}
