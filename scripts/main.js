@@ -64,8 +64,24 @@ function parseRouteEvent(long, lat) {
 
 //a function that notifies 
 
-
-
+// random doc for template
+function getRandomDocs(n, docsArray) {
+    if (n >= docsArray.length) {
+      return docsArray;
+    }
+    
+    let shuffled = docsArray.slice(0);
+    let randomDocs = [];
+    
+    for (let i = 0; i < n; i++) {
+      let randomIndex = Math.floor(Math.random() * shuffled.length);
+      randomDocs.push(shuffled[randomIndex]);
+      shuffled.splice(randomIndex, 1);
+    }
+    
+    return randomDocs;
+  }
+  
 //------------------------------------------------------------------------------
 // Input parameter is a string representing the collection we are reading from
 //------------------------------------------------------------------------------
@@ -73,12 +89,18 @@ function displayCardsDynamically(collection) {
     let cardTemplate = document.getElementById("routeCardTemplate");
   
     db.collection(collection)
-      .where("code", "in", ["LionsgatesNorthside", "PattulloNorthendS",
-      "HW91ABoundaryW","KnightNorthendS" ])
       .get()
       .then((querySnapshot) => {
-        let i = 0;
+        let docsArray = [];
+        
         querySnapshot.forEach((doc) => {
+          docsArray.push(doc);
+        });
+        
+        let randomDocs = getRandomDocs(4, docsArray);
+  
+        let i = 0;
+        randomDocs.forEach((doc) => {
           var title = doc.data().name;
           var details = doc.data().details;
           var routeCode = doc.data().code;
@@ -95,14 +117,14 @@ function displayCardsDynamically(collection) {
   
           document.getElementById(collection + "-go-here").appendChild(newcard);
           checkEvent(lat, long, i);
-
+  
           i++;
-        })
+        });
       })
       .catch((error) => {
         console.log(error);
       });
   }
   
-  displayCardsDynamically("routes");  //input param is the name of the collection
-
+  displayCardsDynamically("routes");
+  

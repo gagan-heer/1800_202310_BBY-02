@@ -18,9 +18,8 @@ var uiConfig = {
         if (authResult.additionalUserInfo.isNewUser) {         //if new user
             db.collection("users").doc(user.uid).set({         //write to firestore. We are using the UID for the ID in users collection
                    name: user.displayName,                    //"users" collection
-                   email: user.email,                         //with authenticated user's ID (user.uid)
-                   favoriteRoutes: "49th avenue",                      //optional default profile info      
-                   transportation: "Car"                          //optional default profile info
+                   email: user.email,                         //with authenticated user's ID (user.uid)     
+                   transportation: "Car",
             }).then(function () {
                    console.log("New user added to firestore");
                    window.location.assign("home.html");       //re-direct to main.html after signup
