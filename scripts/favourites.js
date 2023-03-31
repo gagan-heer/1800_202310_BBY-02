@@ -33,37 +33,29 @@ function addToFavourites(routeId) {
   const favouritesRef = firebase.firestore().collection("users").doc(userId).collection("favourites").doc(ID); // Create a reference to the user's favourites list
   favouritesRef.get().then((doc) => {
     if (doc.exists) {
-      // The route is already in the user's favorites, so remove it.
-      const removeConfirm = confirm('This route is already in your favourites. Do you want to remove it?');
-      if (removeConfirm) {
-        favouritesRef.delete();
-        // changes the icon of the route that was removed from favourites to "unfilled"
-        document.getElementById('star_border').innerText = 'star_border';
-        alert('The route has been removed from your favourites.');
-      }
+      // Remove the route from the user's favorites and change the icon to 'unfilled'
+      favouritesRef.delete();
+      document.getElementById('star_border').innerText = 'star_border';
+      alert('The route has been removed from your favourites.');
     } else {
-      // The route is not yet in the user's Favourites so it is added
-      const addConfirm = confirm('Do you want to add this route to your favourites?');
-      if (addConfirm) {
-        const routeRef = firebase.firestore().collection("routes").doc(ID);
-        routeRef.get().then((doc) => {
-          favouritesRef.set({
-            name: doc.data().name,
-            city: doc.data().city,
-            code: doc.data().code,
-            province: doc.data().province,
-            details: doc.data().details,
-            img: doc.data().img,
-            desc: doc.data().desc,
-            long: doc.data().long,
-            lat: doc.data().lat
-          });
+      // Add the route to the user's favorites and change the icon to 'filled'
+      const routeRef = firebase.firestore().collection("routes").doc(ID);
+      routeRef.get().then((doc) => {
+        favouritesRef.set({
+          name: doc.data().name,
+          city: doc.data().city,
+          code: doc.data().code,
+          province: doc.data().province,
+          details: doc.data().details,
+          img: doc.data().img,
+          desc: doc.data().desc,
+          long: doc.data().long,
+          lat: doc.data().lat
         });
-        
-        //changes the icon of the route that was favourited to "filled"
-        document.getElementById('star_border').innerText = 'star';
-        alert('The route has been added to your favourites.');
-      }
+      });
+
+      document.getElementById('star_border').innerText = 'star';
+      alert('The route has been added to your favourites.');
     }
   });
 }
