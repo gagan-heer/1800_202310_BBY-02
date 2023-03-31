@@ -149,13 +149,16 @@ function hasEvent(lat, long, callback) {
   }); 
 };
 
-//each routecard template has a 
+// each routecard template has a 
 function checkEvent(lat, long, classNumber) {
   hasEvent(lat, long, function(hasEventResult) {
     let icon = document.getElementById("logo");
     let newIcon = icon.content.cloneNode(true);
     
     if(hasEventResult == true){
+
+      console.log(hasEventResult)
+
       document.getElementsByClassName("routeNumber")[classNumber].append(newIcon);
     }
   });

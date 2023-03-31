@@ -104,6 +104,7 @@ function hasEvent(lat, long, callback) {
   
   //each routecard template has a 
 function checkEvent(lat, long, classNumber) {
+    
     hasEvent(lat, long, function(hasEventResult) {
         let icon = document.getElementById("logo");
         let newIcon = icon.content.cloneNode(true);
@@ -118,36 +119,56 @@ function checkEvent(lat, long, classNumber) {
 // Displays routes from the "routes" collection from Firestore dynamically
 //------------------------------------------------------------------------------
 function displayCardsDynamically(collection) {
-    let cardTemplate = document.getElementById("routeCardTemplate");
+  let cardTemplate = document.getElementById("routeCardTemplate");
 
-    db.collection(collection).get()   //the collection called "hikes"
-        .then(allRoutes=> {
-            let i = 0;  //Optional: if you want to have a unique ID for each hike
-            allRoutes.forEach(doc => { //iterate thru each doc
-                var title = doc.data().name;       // get value of the "name" key
-                var details = doc.data().details;  // get value of the "details" key
-                var img = doc.data().img;           //get img
-                var docID = doc.id;
-                let newcard = cardTemplate.content.cloneNode(true);
-                lat = doc.data().lat;
-                long = doc.data().long
+  db.collection(collection)
+    .get()
+    .then((allRoutes) => {
+      let cardsWithEvents = [];
+      let cardsWithoutEvents = [];
+      let i = 0; // Optional: if you want to have a unique ID for each hike
 
-                //update title and text and image
-                newcard.querySelector('.card-title').innerHTML = title;
-                newcard.querySelector('.card-text').innerHTML = details;
-                newcard.querySelector('.card-image').src = img;
-                newcard.querySelector('a').href = "eachRoute.html?docID=" + docID;
+      allRoutes.forEach((doc) => {
+        var title = doc.data().name; // get value of the "name" key
+        var details = doc.data().details; // get value of the "details" key
+        var img = doc.data().img; //get img
+        var docID = doc.id;
+        let newcard = cardTemplate.content.cloneNode(true);
+        lat = doc.data().lat;
+        long = doc.data().long;
 
+        //update title and text and image
+        newcard.querySelector(".card-title").innerHTML = title;
+        newcard.querySelector(".card-text").innerHTML = details;
+        newcard.querySelector(".card-image").src = img;
+        newcard.querySelector("a").href = "eachRoute.html?docID=" + docID;
 
-                //attach to gallery
-                document.getElementById(collection + "-go-here").appendChild(newcard);
-                checkEvent(lat, long, i);
+        let icon = document.getElementById("logo");
+        let newIcon = icon.content.cloneNode(true);
 
-                // updatedHours(lat, long);
+        hasEvent(lat, long, (hasEventResult) => {
+          
+          if (hasEventResult) {            
+            newcard.querySelector(".routeNumber").append(newIcon) 
+            cardsWithEvents.push(newcard);                                    
+          } else {
+            cardsWithoutEvents.push(newcard);
+          }
 
-                i++;   //Optional: iterate variable to serve as unique ID
-            })
-        })
+          if (cardsWithEvents.length + cardsWithoutEvents.length === allRoutes.size) {
+            cardsWithEvents.forEach((card) => {
+              document.getElementById(collection + "-go-here").appendChild(card);
+            });
+
+            cardsWithoutEvents.forEach((card) => {
+              document.getElementById(collection + "-go-here").appendChild(card);
+            });
+          }
+        });
+
+        i++; // Optional: iterate variable to serve as unique ID
+      });
+    });
 }
 
 firebase.auth().onAuthStateChanged(user => {
