@@ -25,6 +25,12 @@ body {
 
 }
 
+#notification-title {
+  font-size: 17px;
+  text-align: center;
+  font-weight: bold;
+}
+
 #desc-text {
   white-space: pre-line;
 }
@@ -46,9 +52,14 @@ body {
   white-space: normal;
 }
 
-.dropdown {
-  margin-right: 10px;
+.navbar-toggler{
+  float: right;
 }
+
+.dropdown {
+  position: right;
+}
+
 * {
   box-sizing: border-box;
 }

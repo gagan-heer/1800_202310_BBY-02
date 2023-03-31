@@ -1,0 +1,9 @@
+#firebaseui-auth-container {
+    margin: 100px;
+}
+
+#footerPlaceholder {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
