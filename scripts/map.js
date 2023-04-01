@@ -44,7 +44,7 @@ function showEventsOnMap() {
                             'type': 'Feature',
                             'properties': {
                                 'description': `<strong>${event_name}</strong><p>${preview}</p> <br> 
-                                <a href="/eachRoute.html?docID=${doc.id}" target="_blank" title="Opens in a new window">Read more</a>`
+                                <a href="/eachRoute.html?docID=${doc.id}" target="_blank" title="Opens in a new window">View Live Cam</a>`
                             },
                             'geometry': {
                                 'type': 'Point',

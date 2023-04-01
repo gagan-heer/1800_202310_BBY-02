@@ -61,11 +61,11 @@ body {
 }
 
 .nav-item {
-  text-align: left;
+  text-align: right;
 }
 
 .nav-item button {
-  float: left;
+  float: right;
 }
 
 * {
