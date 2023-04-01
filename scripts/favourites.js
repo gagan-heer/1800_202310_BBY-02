@@ -102,9 +102,9 @@ function updatedHours(lat, long, title){
         //because of cutting words off some text may look the same even though they are entirely different events
         //discuss what to do, wether to keep short text or give long text. or find more patterns with their desc.
         if(temp.indexOf("Starting") > -1){
-          sentence = sentence.concat("<li><a class=\"dropdown-item\" href=\"#\" id=\"content-", count, "\">", temp.substring(0, temp.indexOf("Starting")), hour_difference," Hours ago</a></li>");
+          sentence = sentence.concat("<li><a class=\"dropdown-item\" href=\"#\" id=\"content-", count, "\">", temp.substring(0, temp.indexOf("Starting")), "<div id=\"timestamp\">",hour_difference," Hours ago</div></a></li>");
         } else {
-          sentence = sentence.concat("<li><a class=\"dropdown-item\" href=\"#\" id=\"content-", count, "\">", temp.substring(0, temp.indexOf("Until")),"</a></li>");
+          sentence = sentence.concat("<li><a class=\"dropdown-item\" href=\"#\" id=\"content-", count, "\">", temp.substring(0, temp.indexOf("Until")), "<div id=\"timestamp\">",hour_difference," Hours ago</div></a></li>");
         }
         findRouteLink(lat,long, count);
         count++;

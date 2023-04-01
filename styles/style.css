@@ -47,17 +47,25 @@ body {
   float: right;
 }
 
+#timestamp {
+  font-weight: 600;
+}
+
 .dropdown-menu a{
   width: 300px;
   white-space: normal;
 }
 
-.navbar-toggler{
-  float: right;
+.dropdown {
+  margin: 5px;
 }
 
-.dropdown {
-  position: right;
+.nav-item {
+  text-align: left;
+}
+
+.nav-item button {
+  float: left;
 }
 
 * {

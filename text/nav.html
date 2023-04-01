@@ -25,27 +25,26 @@
           <li class="nav-item">
             <button type="button" class="btn logout-btn nav-link active" onclick="logout()">Logout</button>
           </li>
-          <!-- <---------this is pop up message (modal)----------> 
-          <div id="modal1" class="modal">
-            <div class="modal-content">
-              <span class="close">&times;</span>
-              <p>Logout successfully.</p>
-            </div>
-          </div>
         </ul>
       </div>
+    </div>
+    <!-- The drop down for notifications. -->
+    <div class="dropdown me-auto">
+      <a class="btn btn-light" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+        Notifications<span class="badge rounded-pill badge-notification bg-danger" id="notification-count"></span>
+      </a>
+    
+        <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="dropdownMenuLink" id="dropdown-notifications">
 
-
-        <!-- The drop down for notifications. -->
-        <div class="dropdown dropstart">
-          <a class="btn btn-light" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-            Notifications
-            <span class="badge rounded-pill badge-notification bg-danger" id="notification-count"></span>
-          </a>
-        
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" id="dropdown-notifications">
-  
-          </ul>
-        </div>
+        </ul>
     </div>
 </nav>
+
+
+      <!-- <---------this is pop up message (modal)----------> 
+        <div id="modal1" class="modal">
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Logout successfully.</p>
+          </div>
+        </div>
