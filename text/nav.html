@@ -1,12 +1,15 @@
 <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
     <div class="container-fluid">
       <a class="navbar-brand" href="home.html">WeatherJam</a>
+
+
       
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+      
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav me-0 mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="home.html">Home</a>
           </li>
@@ -19,7 +22,9 @@
           <li class="nav-item">
             <a class="nav-link active"  aria-current="page" href="profile.html">Profile</a>
           </li>
-          <button type="button" class="btn logout-btn" onclick="logout()">Logout</button>
+          <li class="nav-item">
+            <button type="button" class="btn logout-btn nav-link active" onclick="logout()">Logout</button>
+          </li>
           <!-- <---------this is pop up message (modal)----------> 
           <div id="modal1" class="modal">
             <div class="modal-content">
@@ -28,6 +33,8 @@
             </div>
           </div>
         </ul>
+      </div>
+
 
         <!-- The drop down for notifications. -->
         <div class="dropdown dropstart">
@@ -37,10 +44,8 @@
           </a>
         
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" id="dropdown-notifications">
-
+  
           </ul>
         </div>
-
-      </div>
     </div>
 </nav>

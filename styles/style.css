@@ -1,3 +1,7 @@
+body {
+  text-align: center;
+}
+
 #card-image-container {
   position: relative;
 }
@@ -21,6 +25,12 @@
 
 }
 
+#notification-title {
+  font-size: 17px;
+  text-align: center;
+  font-weight: bold;
+}
+
 #desc-text {
   white-space: pre-line;
 }
@@ -42,9 +52,14 @@
   white-space: normal;
 }
 
-.dropdown {
-  margin-right: 10px;
+.navbar-toggler{
+  float: right;
 }
+
+.dropdown {
+  position: right;
+}
+
 * {
   box-sizing: border-box;
 }

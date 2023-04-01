@@ -47,30 +47,50 @@ function findRouteLink(lat, long, numOfNotification, userId) {
   }
   
 
-  //this goes through the specific route and then compares the time updated and current time
+
+//this goes through the specific route and then compares the time updated and current time
 //then logs the description that is below the specific time.
 //
 //this also counts how many notifications there are then uses the count to assign a number
 //to the content-#, allowing a systematic assignment of links.
 let count = 0;
 //the lat/long is from the favourite collections so that only favourite routes are parsed through
-function updatedHours(lat, long){
+function updatedHours(lat, long, title){
   ajaxGET(urlEvent(lat, long), function (data) {
     parsedData = JSON.parse(data);
     let currentTime = new Date();
     var sentence = "";
+
+    parsedData.events.sort(function(a,b){
+      // Turn your strings into dates, and then subtract them
+      // to get a value that is either negative, positive, or zero.
+      return new Date(b.updated) - new Date(a.updated);
+    });
+
+    if(parsedData.events.length != 0){
+      let difference_s = (new Date(parsedData.events[0].updated).getTime() - currentTime.getTime()) / -1000;
+      let difference_m = difference_s / 60;
+      let difference_h = difference_m / 60;
+      if(difference_h <= 250){
+        sentence += "<div id=\"notification-title\">" + title + "</div>";
+      }
+    }
+
+
 
     for(let i = 0; i < parsedData.events.length; i++){
       let difference_s = (new Date(parsedData.events[i].updated).getTime() - currentTime.getTime()) / -1000;
       let difference_m = difference_s / 60;
       let difference_h = difference_m / 60;
       let temp = parsedData.events[i].description;
+      let hour_difference = parseInt(difference_h);
     
-      if(difference_h < 500){ //this is looking for all favourite route's events less than 500h ago.
+      //if you change the hour difference make sure to change the one above too
+      if(difference_h <= 250 ){ //this is looking for all favourite route's events less than 500h ago.
         //because of cutting words off some text may look the same even though they are entirely different events
         //discuss what to do, wether to keep short text or give long text. or find more patterns with their desc.
         if(temp.indexOf("Starting") > -1){
-          sentence = sentence.concat("<li><a class=\"dropdown-item\" href=\"#\" id=\"content-", count, "\">", temp.substring(0, temp.indexOf("Starting")),"</a></li>");
+          sentence = sentence.concat("<li><a class=\"dropdown-item\" href=\"#\" id=\"content-", count, "\">", temp.substring(0, temp.indexOf("Starting")), hour_difference," Hours ago</a></li>");
         } else {
           sentence = sentence.concat("<li><a class=\"dropdown-item\" href=\"#\" id=\"content-", count, "\">", temp.substring(0, temp.indexOf("Until")),"</a></li>");
         }
@@ -170,6 +190,7 @@ function displayCardsDynamically(collection) {
       });
     });
 }
+displayCardsDynamically("routes");  //input param is the name of the collection
 
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
@@ -180,18 +201,18 @@ firebase.auth().onAuthStateChanged(user => {
   } 
 });
 
-displayCardsDynamically("routes");  //input param is the name of the collection
   //  notification display
 function displayFavsDynamically(collection, userId) {  
 
   db.collection("users").doc(userId).collection(collection).get() // get the favorites collection of the current user
     .then(favourites => {
       favourites.forEach(doc => {
+        title = doc.data().name;
         lat = doc.data().lat;
         long = doc.data().long;
         //this goes through the favourite routes and logs the events that happen
         //within specified time.
-        updatedHours(lat, long);
+        updatedHours(lat, long, title);
       })
     })
     .catch(error => console.log(error));

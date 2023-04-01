@@ -76,3 +76,53 @@ function displayRouteInfo() {
     console.log("Route updated.");
 }
 displayRouteInfo();
+
+firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      const userId = user.uid;
+      // displayFavsDynamically("favourites", userId);
+    } else {
+      console.log("User is not logged in.");
+    } 
+  });
+  
+//  notification display
+function displayFavsDynamically(collection, userId) {  
+
+db.collection("users").doc(userId).collection(collection).get() // get the favorites collection of the current user
+    .then(favourites => {
+    favourites.forEach(doc => {
+        title = doc.data().name;
+        lat = doc.data().lat;
+        long = doc.data().long;
+        //this goes through the favourite routes and logs the events that happen
+        //within specified time.
+        updatedHours(lat, long, title);
+    })
+    })
+    .catch(error => console.log(error));
+}
+  
+
+  //this function goes through the route collections and then compares the lat and long of
+//parameter to the routes. if its the same then the route link is assigned to the specific
+//anchored tag.
+function findRouteLink(lat, long, numOfNotification, userId) {  
+    let params = new URL( window.location.href ); //get URL of search bar
+    let ID = params.searchParams.get( "docID" ); //get value for key "id"
+    
+    db.collection("routes").get()
+    .then(allRoutes=> {
+        let routeLink = "";
+        allRoutes.forEach(doc => { //iterate thru each doc
+            var docID = doc.id;
+            let docLat = doc.data().lat;
+            let docLong = doc.data().long;
+  
+            if(docLat == lat && docLong == long){
+              routeLink = "eachRoute.html?docID=" + docID;
+              document.getElementById("content-" + numOfNotification).href = routeLink;
+            }
+        })
+    })
+  }
