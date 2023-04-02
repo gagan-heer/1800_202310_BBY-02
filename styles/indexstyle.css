@@ -1,0 +1,38 @@
+/* Index page styling */
+.featurette-heading {
+    text-align: center;
+  }
+  
+  .featurette-heading + p {
+    display: none;
+    text-align: center;
+  }
+  
+  .featurette:hover .featurette-heading {
+    display: none;
+  }
+  
+  .featurette:hover .featurette-heading + p {
+    display: block;
+  }
+  
+  @media (hover: none) {
+    /* styles for touch devices */
+    .featurette-heading {
+      display: block;
+      text-align: center;
+    }
+  
+    .lead {
+      display: none;
+    }
+  
+    .featurette:hover .lead {
+      display: block;
+      text-align: center;
+    }
+  
+    .featurette:hover .featurette-heading {
+      display: none;
+    }
+  }

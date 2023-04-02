@@ -14,18 +14,18 @@ function populateUserInfo() {
             .then(userDoc => {
                 //get the data fields of the user
                 var userName = userDoc.data().name;
-                var userFavoriteRoutes = userDoc.data().favoriteroutes;
-                var userTransPortation = userDoc.data().transportation;
+                var userCity = userDoc.data().city;
+                var userTransportation = userDoc.data().transportation;
     
                 //if the data fields are not empty, then write them in to the form.
                 if (userName != null) {
                     document.getElementById("nameInput").value = userName;
                 }
-                if (userFavoriteRoutes != null) {
-                    document.getElementById("favoriteroutesInput").value = userFavoriteRoutes;
+                if (userCity != null) {
+                    document.getElementById("cityInput").value = userCity;
                 }
                 if (userTransPortation != null) {
-                    document.getElementById("transportationInput").value = userTransPortation;
+                    document.getElementById("transportationInput").value = userTransportation;
                 }
                 })
         } else {
@@ -48,13 +48,13 @@ function editUserInfo() {
 
     //a) get user entered values
     userName = document.getElementById('nameInput').value;       //get the value of the field with id="nameInput"
-    userFavoriteRoutes = document.getElementById('favoriteroutesInput').value;     //get the value of the field with id="favoriteroutesInput"
-    userTransPortation = document.getElementById('transportationInput').value;       //get the value of the field with id="transportationInput"
+    userCity = document.getElementById('cityInput').value;     //get the value of the field with id="favoriteroutesInput"
+    userTransportation = document.getElementById('transportationInput').value;       //get the value of the field with id="transportationInput"
     //b) update user's document in Firestore
     currentUser.update({
         name: userName,
-        favoriteroutes: userFavoriteRoutes,
-        transportation: userTransPortation
+        city: userCity,
+        transportation: userTransportation
     })
     .then(() => {
         console.log("Document successfully updated!");
