@@ -36,7 +36,7 @@ function addToFavourites(routeId) {
       // Remove the route from the user's favorites and change the icon to 'unfilled'
       favouritesRef.delete();
       document.getElementById('star_border').innerText = 'star_border';
-      alert('The route has been removed from your favourites.');
+      swal('The route has been removed from your favourites.');
     } else {
       // Add the route to the user's favorites and change the icon to 'filled'
       const routeRef = firebase.firestore().collection("routes").doc(ID);
@@ -55,7 +55,7 @@ function addToFavourites(routeId) {
       });
 
       document.getElementById('star_border').innerText = 'star';
-      alert('The route has been added to your favourites.');
+      swal('The route has been added to your favourites.');
     }
   });
 }
