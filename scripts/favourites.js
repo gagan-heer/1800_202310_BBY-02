@@ -29,7 +29,6 @@ function addToFavourites(routeId) {
   let params = new URL(window.location.href); //Get the url from the search bar
   let ID = params.searchParams.get("docID");
 
-  const routeRef = firebase.firestore().collection("routes").doc(routeId); // Get route info
   const favouritesRef = firebase.firestore().collection("users").doc(userId).collection("favourites").doc(ID); // Create a reference to the user's favourites list
   favouritesRef.get().then((doc) => {
     if (doc.exists) {
@@ -253,7 +252,3 @@ function checkFavourites() {
 }
 
 
-
-//compare machine time to updated time
-//go through user's favourite route's and compare the updated time
-//notify user if updated time and machine time is less than an hour?

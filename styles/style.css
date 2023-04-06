@@ -103,10 +103,24 @@ body {
   background-color: #eee;
 }
 
-#btn-viewAll {
- /* float: right; */
-}
-
 .custom-navbar {
   background-color: #6188c2;
 }
+
+@media (max-width: 475px) and (min-width:361px) {
+  iframe {
+    height: 405px;
+    width: 345px;
+  }
+}
+
+  @media screen and (max-width: 360px) {
+    iframe {
+      height: 405px;
+      width: 265px;
+    }
+  }
+
+  #desc {
+    width: 100%;
+  }
