@@ -107,12 +107,15 @@ function checkEvent(lat, long, classNumber) {
 
 
   // Dynamically display Favourite Routes on home page
+  // routes with events are displayed first
 function displayFavsDynamically(collection, userId) {
     let cardTemplate = document.getElementById("favouritesCardTemplate");
     console.log(userId);
 
     db.collection("users").doc(userId).collection(collection).get() // get the favorites collection of the current user
       .then(favourites => {
+        let cardsWithEvents = [];
+        let cardsWithoutEvents = [];
         let i = 0;
         favourites.forEach(doc => {
           var title = doc.data().name;
@@ -130,8 +133,28 @@ function displayFavsDynamically(collection, userId) {
           newcard.querySelector('.card-image').src = img;
           newcard.querySelector('a').href = "eachRoute.html?docID=" + docID;
 
-          document.getElementById(collection + "-go-here").appendChild(newcard);
-          checkEvent(lat, long, i);
+          let icon = document.getElementById("logo");
+          let newIcon = icon.content.cloneNode(true);
+
+          hasEvent(lat, long, (hasEventResult) => {
+          
+              if (hasEventResult) {            
+                newcard.querySelector(".routeNumber").append(newIcon);
+                cardsWithEvents.push(newcard);
+              } else {
+                cardsWithoutEvents.push(newcard);
+              }
+
+              if (cardsWithEvents.length + cardsWithoutEvents.length === favourites.size) {
+                cardsWithEvents.forEach((card) => {
+                  document.getElementById(collection + "-go-here").appendChild(card);
+                });
+
+                cardsWithoutEvents.forEach((card) => {
+                  document.getElementById(collection + "-go-here").appendChild(card);
+                });
+              }
+            });
 
           //this goes through the favourite routes and logs the events that happen
           //within specified time.
