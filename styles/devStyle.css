@@ -4,3 +4,24 @@
     margin-bottom: 10px; /* Added */
     margin-top: 10px;
 }
+
+.dropdown-menu a{
+    width: 300px;
+    white-space: normal;
+  }
+  
+  .dropdown {
+    margin: 5px;
+  }
+  
+  .nav-item {
+    text-align: right;
+  }
+  
+  .nav-item button {
+    float: right;
+  }
+
+  .custom-navbar {
+    background-color: #6188c2;
+  }
