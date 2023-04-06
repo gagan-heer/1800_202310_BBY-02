@@ -1,8 +1,9 @@
-
+//this returns an url for a specific route
 function urlEvent(lat, long) {
     return "https://api.open511.gov.bc.ca/events?geography=POINT(" + lat + "%20" + long + ")&tolerance=5000";
 }
 
+//request from api returns a json
 function ajaxGET(url, callback) {
     const xhr = new XMLHttpRequest();
 
@@ -89,6 +90,8 @@ firebase.auth().onAuthStateChanged(user => {
 //  notification display
 function displayFavsDynamically(collection, userId) {  
 
+//this goes through the favourite collection routes and adds a notification
+//if it has an event
 db.collection("users").doc(userId).collection(collection).get() // get the favorites collection of the current user
     .then(favourites => {
     favourites.forEach(doc => {

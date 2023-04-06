@@ -152,7 +152,7 @@ function updatedHours(lat, long, title){
       let difference_s = (new Date(parsedData.events[0].updated).getTime() - currentTime.getTime()) / -1000;
       let difference_m = difference_s / 60;
       let difference_h = difference_m / 60;
-      if(difference_h <= 250){
+      if(difference_h <= 1){
         sentence += "<div id=\"notification-title\">" + title + "</div>";
       }
     }
@@ -167,7 +167,7 @@ function updatedHours(lat, long, title){
       let hour_difference = parseInt(difference_h);
     
       //if you change the hour difference make sure to change the one above too
-      if(difference_h <= 250 ){ //this is looking for all favourite route's events less than 500h ago.
+      if(difference_h <= 1 ){ //this is looking for all favourite route's events less than 500h ago.
         //because of cutting words off some text may look the same even though they are entirely different events
         //discuss what to do, wether to keep short text or give long text. or find more patterns with their desc.
         if(temp.indexOf("Starting") > -1){

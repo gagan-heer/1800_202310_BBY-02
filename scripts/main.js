@@ -16,14 +16,7 @@ function insertName() {
 }
 insertName(); //run the function
 
-//a function that parse through a route's nearby event using coordinates parseRouteEvent(long, lat);
-//a function that add a description to a route
-// function urlEvent(lat, long) {
-//     return "https://api.open511.gov.bc.ca/events?geography=POINT(" + lat + "%20" + long + ")&tolerance=15000";
-// }
-
-
-
+//get request for api
 function ajaxGET(url, callback) {
 
     const xhr = new XMLHttpRequest();
@@ -44,6 +37,7 @@ function ajaxGET(url, callback) {
     xhr.send();
 }
 
+//this parses through the event and gets the description
 function parseRouteEvent(long, lat) {
     ajaxGET(urlEvent(long, lat), function (data) {
         parsedData = JSON.parse(data);
@@ -54,12 +48,6 @@ function parseRouteEvent(long, lat) {
         // document.getElementById("desc-text").innerHTML = desc; //must be desc for cards
     }); 
 };
-
-//a function that loops the function that writes description every certain time
-
-//make sure to unhide danger logo when there is an event
-
-//a function that notifies 
 
 // random doc for template
 function getRandomDocs(n, docsArray) {
