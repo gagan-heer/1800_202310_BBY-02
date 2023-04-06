@@ -3,6 +3,7 @@ function urlEvent(lat, long) {
     return "https://api.open511.gov.bc.ca/events?geography=POINT(" + lat + "%20" + long + ")&tolerance=5000";
 }
 
+// This function makes an AJAX GET request to the provided URL and calls the callback function with the response
 function ajaxGET(url, callback) {
 
     const xhr = new XMLHttpRequest();
@@ -54,6 +55,7 @@ function findRouteLink(lat, long, numOfNotification, userId) {
 //this also counts how many notifications there are then uses the count to assign a number
 //to the content-#, allowing a systematic assignment of links.
 let count = 0;
+
 //the lat/long is from the favourite collections so that only favourite routes are parsed through
 function updatedHours(lat, long, title){
   ajaxGET(urlEvent(lat, long), function (data) {
@@ -71,7 +73,7 @@ function updatedHours(lat, long, title){
       let difference_s = (new Date(parsedData.events[0].updated).getTime() - currentTime.getTime()) / -1000;
       let difference_m = difference_s / 60;
       let difference_h = difference_m / 60;
-      if(difference_h <= 24){
+      if(difference_h <= 24){    //This is looking for all favorite route's events less than 24 hours ago.
         sentence += "<div id=\"notification-title\">" + title + "</div>";
       }
     }

@@ -1,57 +1,67 @@
+<!-- Navbar setup -->
 <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
-    <div class="container-fluid">
+  <div class="container-fluid">
+      <!-- Navbar brand -->
       <a class="navbar-brand" href="home.html">WeatherJam</a>
-      
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-0 mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="home.html">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active"  aria-current="page" href="routelist.html">Routes List</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active"  aria-current="page" href="map.html">Map View</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active"  aria-current="page" href="profile.html">Profile</a>
-          </li>
-          <li class="nav-item">
-            <button type="button" class="btn logout-btn nav-link active" onclick="logout()">Logout</button>
-          </li>
-          <!-- <---------this is pop up message (modal)----------> 
-          <div id="modal1" class="modal">
-            <div class="modal-content">
-              <span class="close">&times;</span>
-              <p>Logout successfully.</p>
-            </div>
-          </div>
-        </ul>
-      </div>
-    </div>
-    <!-- The drop down for notifications. -->
-    <div class="dropdown ms-auto">
-      <a class="btn btn-light" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-        Notifications
-        <span class="badge rounded-pill badge-notification bg-danger" id="notification-count"></span>
-      </a>
-    
-      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink" id="dropdown-notifications">
 
+      <!-- Navbar toggler for responsive design -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Navbar items -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-0 mb-2 mb-lg-0">
+              <!-- Home link -->
+              <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="home.html">Home</a>
+              </li>
+              <!-- Routes List link -->
+              <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="routelist.html">Routes List</a>
+              </li>
+              <!-- Map View link -->
+              <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="map.html">Map View</a>
+              </li>
+              <!-- Profile link -->
+              <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="profile.html">Profile</a>
+              </li>
+              <!-- Logout button -->
+              <li class="nav-item">
+                  <button type="button" class="btn logout-btn nav-link active" onclick="logout()">Logout</button>
+              </li>
+              <!-- Modal for logout success message -->
+              <div id="modal1" class="modal">
+                  <div class="modal-content">
+                      <span class="close">&times;</span>
+                      <p>Logout successfully.</p>
+                  </div>
+              </div>
+          </ul>
+      </div>
+  </div>
+  <!-- Dropdown for notifications -->
+  <div class="dropdown ms-auto">
+      <a class="btn btn-light" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+          Notifications
+          <span class="badge rounded-pill badge-notification bg-danger" id="notification-count"></span>
+      </a>
+
+      <!-- Dropdown menu for notifications -->
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink" id="dropdown-notifications">
       </ul>
-    </div>
+  </div>
 </nav>
 
+<!-- Modal for logout success message -->
+<div id="modal1" class="modal">
+  <div class="modal-content">
+      <span class="close">&times;</span>
+      <p>Logout successfully.</p>
+  </div>
+</div>
 
-      <!-- <---------this is pop up message (modal)----------> 
-        <div id="modal1" class="modal">
-          <div class="modal-content">
-            <span class="close">&times;</span>
-            <p>Logout successfully.</p>
-          </div>
-        </div>
-
+<!-- Include the nav.js script -->
 <script src="./scripts/nav.js"></script>

@@ -110,6 +110,7 @@ db.collection("users").doc(userId).collection(collection).get() // get the favor
   //this function goes through the route collections and then compares the lat and long of
 //parameter to the routes. if its the same then the route link is assigned to the specific
 //anchored tag.
+//Find and set the link to the correct route based on the latitude and longitude.
 function findRouteLink(lat, long, numOfNotification, userId) {  
     let params = new URL( window.location.href ); //get URL of search bar
     let ID = params.searchParams.get( "docID" ); //get value for key "id"

@@ -1,6 +1,6 @@
 var currentUser;          
 
-
+// Populate user information fields
 function populateUserInfo() {    
     firebase.auth().onAuthStateChanged(user => {
         // Check if user is signed in:
@@ -38,11 +38,13 @@ function populateUserInfo() {
 populateUserInfo()
 
 //call the function to run it 
-
+// Enable editing of user information fields
 function editUserInfo() {
     //Enable the form fields
     document.getElementById('personalInfoFields').disabled = false;
  }
+ 
+ // Save edited user information
  function saveUserInfo() {
     //enter code here
 
@@ -82,8 +84,7 @@ function ajaxGET(url, callback) {
     xhr.send();
 }
 
-
-//  notification display
+// Display user's favorite routes dynamically
 function displayFavsDynamically(collection, userId) {  
 
     db.collection("users").doc(userId).collection(collection).get() // get the favorites collection of the current user
