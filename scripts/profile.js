@@ -1,4 +1,4 @@
-var currentUser;          //put this right after you start script tag before writing any functions.
+var currentUser;          
 
 
 function populateUserInfo() {    
@@ -48,7 +48,7 @@ function editUserInfo() {
 
     //a) get user entered values
     userName = document.getElementById('nameInput').value;       //get the value of the field with id="nameInput"
-    userCity = document.getElementById('cityInput').value;     //get the value of the field with id="favoriteroutesInput"
+    userCity = document.getElementById('cityInput').value;     //get the value of the field with id="cityInput"
     userTransportation = document.getElementById('transportationInput').value;       //get the value of the field with id="transportationInput"
     //b) update user's document in Firestore
     currentUser.update({
