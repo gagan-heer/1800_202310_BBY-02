@@ -24,7 +24,7 @@ function populateUserInfo() {
                 if (userCity != null) {
                     document.getElementById("cityInput").value = userCity;
                 }
-                if (userTransPortation != null) {
+                if (userTransportation != null) {
                     document.getElementById("transportationInput").value = userTransportation;
                 }
                 })
