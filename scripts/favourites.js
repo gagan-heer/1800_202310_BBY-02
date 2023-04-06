@@ -163,6 +163,7 @@ function checkFavourites() {
 
     const favouritesRef = firebase.firestore().collection("users").doc(userId).collection("favourites").doc(ID); // Create a reference to the user's favourites list
     favouritesRef.get().then((doc) => {
+        // Displays filled in star if te routes is already in the user's favourites, else displays unfilled star
         if (doc.exists) {
             document.getElementById('star_border').innerText = 'star';
           } else {

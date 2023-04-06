@@ -1,4 +1,5 @@
 
+// Inserts the user's name on the home page if there is a user logged in
 function insertName() {
     firebase.auth().onAuthStateChanged(user => {
         // Check if a user is signed in:
