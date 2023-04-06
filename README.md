@@ -90,6 +90,9 @@ It has the following subfolders and files:
     /login.css               # Styling for login.html
     /map.css                 # Styling for map.html
     /style.css               # Styling for all html pages
+├── text                     # Folder for text
+    /footer.html             # Footer for each html page
+    /nav.html                # Navbar for each html page
 
 
 
