@@ -135,6 +135,7 @@ function displayFavsDynamically(collection, userId) {
 
           let icon = document.getElementById("logo");
           let newIcon = icon.content.cloneNode(true);
+          updatedHours(lat, long, title);
 
           hasEvent(lat, long, (hasEventResult) => {
           
@@ -158,7 +159,6 @@ function displayFavsDynamically(collection, userId) {
 
           //this goes through the favourite routes and logs the events that happen
           //within specified time.
-          updatedHours(lat, long, title);
           i++;
         })
       })
@@ -221,7 +221,8 @@ function updatedHours(lat, long, title){
       let difference_s = (new Date(parsedData.events[0].updated).getTime() - currentTime.getTime()) / -1000;
       let difference_m = difference_s / 60;
       let difference_h = difference_m / 60;
-      if(difference_h <= 1){
+
+      if(difference_h <= 24){
         sentence += "<div id=\"notification-title\">" + title + "</div>";
       }
     }
@@ -236,7 +237,7 @@ function updatedHours(lat, long, title){
       let hour_difference = parseInt(difference_h);
     
       //if you change the hour difference make sure to change the one above too
-      if(difference_h <= 1 ){ //this is looking for all favourite route's events less than 500h ago.
+      if(difference_h <= 24 ){ //this is looking for all favourite route's events less than 500h ago.
         //because of cutting words off some text may look the same even though they are entirely different events
         //discuss what to do, wether to keep short text or give long text. or find more patterns with their desc.
         if(temp.indexOf("Starting") > -1){
@@ -252,4 +253,27 @@ function updatedHours(lat, long, title){
 
     document.getElementById("notification-count").innerHTML = count;
   });
+}
+
+  //this function goes through the route collections and then compares the lat and long of
+//parameter to the routes. if its the same then the route link is assigned to the specific
+//anchored tag.
+function findRouteLink(lat, long, numOfNotification, userId) {  
+  let params = new URL( window.location.href ); //get URL of search bar
+  let ID = params.searchParams.get( "docID" ); //get value for key "id"
+  
+  db.collection("routes").get()
+  .then(allRoutes=> {
+      let routeLink = "";
+      allRoutes.forEach(doc => { //iterate thru each doc
+          var docID = doc.id;
+          let docLat = doc.data().lat;
+          let docLong = doc.data().long;
+
+          if(docLat == lat && docLong == long){
+            routeLink = "eachRoute.html?docID=" + docID;
+            document.getElementById("content-" + numOfNotification).href = routeLink;
+          }
+      })
+  })
 }
