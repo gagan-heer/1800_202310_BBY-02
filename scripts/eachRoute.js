@@ -1,6 +1,6 @@
 //this returns an url for a specific route
 function urlEvent(lat, long) {
-    return "https://api.open511.gov.bc.ca/events?geography=POINT(" + lat + "%20" + long + ")&tolerance=5000";
+    return "https://api.open511.gov.bc.ca/events?geography=POINT(" + lat + "%20" + long + ")&tolerance=5000"; //tolerance is 5km , formula: n / 1000 = #km
 }
 
 //request from api returns a json

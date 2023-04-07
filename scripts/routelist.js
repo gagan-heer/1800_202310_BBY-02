@@ -1,6 +1,6 @@
 //this returns an url for a specific route
 function urlEvent(lat, long) {
-    return "https://api.open511.gov.bc.ca/events?geography=POINT(" + lat + "%20" + long + ")&tolerance=5000";
+    return "https://api.open511.gov.bc.ca/events?geography=POINT(" + lat + "%20" + long + ")&tolerance=5000"; //tolerance is 5km , formula: n / 1000 = #km
 }
 
 // This function makes an AJAX GET request to the provided URL and calls the callback function with the response
@@ -93,8 +93,10 @@ function updatedHours(lat, long, title){
         //discuss what to do, wether to keep short text or give long text. or find more patterns with their desc.
         if(temp.indexOf("Starting") > -1){
           sentence = sentence.concat("<li><a class=\"dropdown-item\" href=\"#\" id=\"content-", count, "\">", temp.substring(0, temp.indexOf("Starting")),"<div id=\"timestamp\">",hour_difference," Hours ago</div></a></li>");
-        } else {
+        } else if(temp.indexOf("Until") > -1){
           sentence = sentence.concat("<li><a class=\"dropdown-item\" href=\"#\" id=\"content-", count, "\">", temp.substring(0, temp.indexOf("Until")), "<div id=\"timestamp\">",hour_difference," Hours ago</div></a></li>");
+        } else {
+          sentence = sentence.concat("<li><a class=\"dropdown-item\" href=\"#\" id=\"content-", count, "\">", temp.substring(0, temp.indexOf("Last")), "<div id=\"timestamp\">",hour_difference," Hours ago</div></a></li>");
         }
         findRouteLink(lat,long, count);
         count++;
