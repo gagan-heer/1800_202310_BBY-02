@@ -78,11 +78,11 @@ function displayCardsDynamically(collection) {
       .get()
       .then((querySnapshot) => {
         let docsArray = [];
-        
+ // Iterate through each document in the collection and add it to the docsArray
         querySnapshot.forEach((doc) => {
           docsArray.push(doc);
         });
-        
+ // Get a specified number of random documents from the docsArray       
         let randomDocs = getRandomDocs(4, docsArray);
   
         let i = 0;
@@ -94,12 +94,12 @@ function displayCardsDynamically(collection) {
           let newcard = cardTemplate.content.cloneNode(true);
           lat = doc.data().lat;
           long = doc.data().long;
-  
+  // Set the card's content using the document's data 
           newcard.querySelector('.card-title').innerHTML = title;
           newcard.querySelector('.card-text').innerHTML = details;
           newcard.querySelector('.card-image').src = img;
           newcard.querySelector('a').href = "eachRoute.html?docID=" + docID;
-  
+  // Append the card to the specified container on the page
           document.getElementById(collection + "-go-here").appendChild(newcard);
           // checkEvent(lat, long, i);
   
