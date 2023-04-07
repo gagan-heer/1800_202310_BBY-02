@@ -245,6 +245,7 @@ function updatedHours(lat, long, title){
         } else {
           sentence = sentence.concat("<li><a class=\"dropdown-item\" href=\"#\" id=\"content-", count, "\">", temp.substring(0, temp.indexOf("Until")), "<div id=\"timestamp\">",hour_difference," Hours ago</div></a></li>");
         }
+
         findRouteLink(lat,long, count);
         count++;
       }
@@ -258,9 +259,9 @@ function updatedHours(lat, long, title){
   //this function goes through the route collections and then compares the lat and long of
 //parameter to the routes. if its the same then the route link is assigned to the specific
 //anchored tag.
-function findRouteLink(lat, long, numOfNotification, userId) {  
+function findRouteLink(latToGet, longToGet, numOfNotification, userId) {  
   let params = new URL( window.location.href ); //get URL of search bar
-  let ID = params.searchParams.get( "docID" ); //get value for key "id"
+  // let ID = params.searchParams.get( "docID" ); //get value for key "id"
   
   db.collection("routes").get()
   .then(allRoutes=> {
@@ -270,7 +271,7 @@ function findRouteLink(lat, long, numOfNotification, userId) {
           let docLat = doc.data().lat;
           let docLong = doc.data().long;
 
-          if(docLat == lat && docLong == long){
+          if(docLat == latToGet && docLong == longToGet){
             routeLink = "eachRoute.html?docID=" + docID;
             document.getElementById("content-" + numOfNotification).href = routeLink;
           }
